@@ -1,0 +1,36 @@
+/* bütün css kodları */
+body {
+    background-color: #0f172a; /* gece mavisi arka plan */
+    color: #ffffff;            /* Yazı rengi*/
+    font-family: Arial, sans-serif;
+}
+
+/* metnin durduğu kutunun ayarları*/
+#target-text {
+    background-color: #1e293b; /* arka plandan biraz daha açık bir mavi */
+    color: #f8fafc;            /* kutunun içindeki yazının rengi */
+    padding: 15px;
+    border: 2px solid #043d55;
+    width: 400px;
+    font-size: 18px;
+}
+
+/* kullanıcının yazı yazacağı kutu */
+#user-input {
+    background-color: #1e293b;
+    color: #ffffff;
+    border: 2px solid #043d55;
+    font-size: 16px;
+    padding: 10px;
+}
+
+/* butonların ortak tasarımı */
+#start-button {
+    padding: 12px 25px;
+    background-color: #9238f8; /* buton rengi */
+    color: #0f172a;            /* Buton yazısı rengi */
+    border: none;
+    font-size: 16px;
+    font-weight: bold;         /* yazıyı kalın yapar */
+    cursor: pointer;           /* fare üzerine gelince el işareti çıksın */
+}
