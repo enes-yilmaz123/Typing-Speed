@@ -11,6 +11,7 @@ let currentWordIndex = 0;
 let totalCorrectWords = 0;
 let totalCorrectLetters = 0;
 let totalWrongWords = 0;
+let totalWrongLetters = 0;
 let lastWrongAttempt = "";
 
 // Listeden rastgele kelime secip html div icine ekleyen fonksiyon
@@ -59,6 +60,7 @@ function prepareTest() {
     currentWordIndex = 0;
     totalCorrectWords = 0;
     totalCorrectLetters = 0;
+    totalWrongLetters = 0;
     totalWrongWords = 0;
     lastWrongAttempt = "";
 
@@ -167,10 +169,11 @@ function submitCurrentWord() {
             totalWrongWords++;
             lastWrongAttempt = typedWord;
         }
-        userInput.value = typedWord;
-        updateCurrentWordFeedback();
-        updateStats();
-        return;
+        if (currentSpan) currentSpan.classList.add("missed-word");
+        
+        // Yanlış kelime atlandığında harfleri kasaya kaydetme eklentisi
+        let currentStats = getCurrentLetterStats();
+        totalWrongLetters += currentStats.wrong;
     }
 
     currentWordIndex++;
@@ -240,7 +243,8 @@ function updateStats() {
 
     if (wpmDisplay) wpmDisplay.innerText = wpm;
     if (correctLettersDisplay) correctLettersDisplay.innerText = totalCorrectLetters + currentStats.correct;
-    if (wrongLettersDisplay) wrongLettersDisplay.innerText = currentStats.wrong;
+    // Yanlış harflerin toplamını ekrana yazdırma eklentisi
+    if (wrongLettersDisplay) wrongLettersDisplay.innerText = totalWrongLetters + currentStats.wrong;
     if (wrongWordsDisplay) wrongWordsDisplay.innerText = totalWrongWords;
 }
 
