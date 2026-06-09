@@ -8,12 +8,22 @@ body {
     margin: 0;
 }
 
-/* Daktilo & Terminal Animasyonlu Başlık (Sol Üst Köşe) */
-.game-title {
+/* Pencere kenarlarına kadar uzanan üst dikdörtgen şerit */
+.header-bar {
     position: absolute;
-    top: 30px;
-    left: 40px;
-    font-size: 42px; /* Sol üst köşe için daha estetik ve dengeli bir boyut */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #131c2c; /* Ana arka plana çok yakın, zarif bir ton */
+    padding: 12px 0;
+    box-sizing: border-box;
+    /* Kenarlık çizgisi kaldırıldı, sadece siyah gölge bırakıldı */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); 
+}
+
+/* Daktilo & Terminal Animasyonlu Başlık */
+.game-title {
+    font-size: 38px; /* Üst barın içerisine tam oturması için dengeli boyut */
     font-weight: 900;
     color: #ffffff;
     font-family: 'Courier New', Courier, monospace; /* Terminal yazı tipi */
@@ -21,7 +31,7 @@ body {
     border-right: 5px solid #4ade80; /* Yeşil renkte yanıp sönen imleç */
     white-space: nowrap;
     overflow: hidden;
-    margin: 0;
+    margin: 0 0 0 40px; /* Sol üst köşedeki yerini koruması için */
     width: 12ch; /* "TYPING SPEED" tam 12 karakter olduğu için */
     
     /* Animasyonları tetikliyoruz */
