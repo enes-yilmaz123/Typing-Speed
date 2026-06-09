@@ -98,7 +98,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 25px; 
-    opacity: 0.15; /* Hafif artırıldı ki renkler daha iyi belli olsun */
+    opacity: 0.15; 
     pointer-events: none; 
     user-select: none; 
     z-index: 5; 
@@ -128,12 +128,13 @@ body {
     transition: all 0.3s ease;
 }
 
-/* --- YENİ EKLENEN: QWERTY VURGUSU --- */
+/* --- ÇOK DAHA BELİRGİN QWERTY VURGUSU --- */
 .highlight-qwerty {
-    color: #4ade80; /* Temadaki doğru harf / imleç yeşili */
-    border-color: rgba(74, 222, 128, 0.9); /* Çerçeveyi de yeşil yapar */
-    box-shadow: inset 0 0 30px rgba(74, 222, 128, 0.2), 0 10px 20px rgba(0, 0, 0, 0.6); /* Yeşil iç parlama */
-    text-shadow: 0 0 20px rgba(74, 222, 128, 0.9); /* Yazıya dış parlama */
+    color: #4ade80; 
+    background-color: rgba(74, 222, 128, 0.15); /* İçerisine hafif yeşil dolgu eklendi */
+    border-color: #4ade80; /* Çerçevenin saydamlığı kaldırıldı, net yeşil yapıldı */
+    box-shadow: inset 0 0 40px rgba(74, 222, 128, 0.4), 0 0 30px rgba(74, 222, 128, 0.4); /* Dışarıya yeşil parlama verildi */
+    text-shadow: 0 0 10px #4ade80, 0 0 25px #4ade80, 0 0 40px #4ade80; /* Yazıdaki parlama 3 katına çıkarıldı */
 }
 
 .space-bar {
@@ -143,15 +144,18 @@ body {
 /* ======================================================== */
 /* --- SADECE GAME.HTML (OYUN EKRANI) İÇİN KALAN KISIM ---  */
 /* ======================================================== */
+
+/* metnin durduğu kutunun ayarları */
 #target-text {
-    background-color: #1e293b; 
-    color: #f8fafc;            
+    background-color: #1e293b; /* arka plandan biraz daha açık bir mavi */
+    color: #f8fafc;            /* kutunun içindeki yazının rengi */
     padding: 15px;
     border: 2px solid #043d55;
     width: 400px;
     font-size: 18px;
 }
 
+/* kullanıcının yazı yazacağı kutu */
 #user-input {
     background-color: #1e293b;
     color: #ffffff;
@@ -160,9 +164,13 @@ body {
     padding: 10px;
 }
 
-.correct { color: #4ade80; }
-.incorrect { 
+/*yazının doğruluğuna göre renk değiştirme*/
+.correct {
+    color: #4ade80; 
+}
+
+.incorrect {
     color: #f87171; 
-    background-color: rgba(248, 113, 113, 0.2); 
+    background-color: rgba(248, 113, 113, 0.2); /* yanlış yazılan kelimelerin arka planını hafif kırmızı yapar */   
     border-radius: 3px;
 }
