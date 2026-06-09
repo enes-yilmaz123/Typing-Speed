@@ -9,6 +9,9 @@ let isTestRunning = false;
 let currentTargetWords = [];
 let currentWordIndex = 0;
 let totalCorrectWords = 0;
+let totalCorrectLetters = 0;
+let totalWrongWords = 0;
+let lastWrongAttempt = "";
 
 // Listeden rastgele kelime secip html div icine ekleyen fonksiyon
 function generateRandomWords() {
@@ -55,6 +58,9 @@ function prepareTest() {
     timeLeft = 60;
     currentWordIndex = 0;
     totalCorrectWords = 0;
+    totalCorrectLetters = 0;
+    totalWrongWords = 0;
+    lastWrongAttempt = "";
 
     if (timerInterval) clearInterval(timerInterval);
     if (timeDisplay) timeDisplay.innerText = timeLeft;
@@ -68,6 +74,8 @@ function prepareTest() {
         userInput.onkeydown = handleKeyDown;
         userInput.focus();
     }
+
+    updateStats();
 }
 
 function startTimer() {
@@ -80,10 +88,13 @@ function startTimer() {
     let timeDisplay = document.getElementById("time");
     let userInput = document.getElementById("user-input");
 
+    updateStats();
+
     timerInterval = setInterval(function() {
         timeLeft--;
 
         if (timeDisplay) timeDisplay.innerText = timeLeft;
+        updateStats();
 
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
@@ -114,6 +125,10 @@ function handleTyping() {
     }
 
     updateCurrentWordFeedback();
+    if (userInput.value.trim() !== lastWrongAttempt) {
+        lastWrongAttempt = "";
+    }
+    updateStats();
 }
 
 function handleKeyDown(event) {
@@ -144,10 +159,17 @@ function submitCurrentWord() {
 
     if (typedWord === currentWord) {
         totalCorrectWords++;
+        totalCorrectLetters += typedWord.length;
+        lastWrongAttempt = "";
         if (currentSpan) currentSpan.classList.add("completed-word");
     } else {
+        if (typedWord !== lastWrongAttempt) {
+            totalWrongWords++;
+            lastWrongAttempt = typedWord;
+        }
         userInput.value = typedWord;
         updateCurrentWordFeedback();
+        updateStats();
         return;
     }
 
@@ -159,6 +181,8 @@ function submitCurrentWord() {
     } else {
         updateTargetWordStyles();
     }
+
+    updateStats();
 }
 
 function updateCurrentWordFeedback() {
@@ -201,4 +225,43 @@ function updateTargetWordStyles() {
 
 function getCurrentWordSpan() {
     return document.querySelectorAll("#target-text .target-word")[currentWordIndex];
+}
+
+function updateStats() {
+    let userInput = document.getElementById("user-input");
+    let wpmDisplay = document.getElementById("wpm");
+    let correctLettersDisplay = document.getElementById("correct-letters");
+    let wrongLettersDisplay = document.getElementById("wrong-letters");
+    let wrongWordsDisplay = document.getElementById("wrong-words");
+
+    let currentStats = getCurrentLetterStats();
+    let elapsedSeconds = 60 - timeLeft;
+    let wpm = elapsedSeconds > 0 ? Math.round(totalCorrectWords / (elapsedSeconds / 60)) : 0;
+
+    if (wpmDisplay) wpmDisplay.innerText = wpm;
+    if (correctLettersDisplay) correctLettersDisplay.innerText = totalCorrectLetters + currentStats.correct;
+    if (wrongLettersDisplay) wrongLettersDisplay.innerText = currentStats.wrong;
+    if (wrongWordsDisplay) wrongWordsDisplay.innerText = totalWrongWords;
+}
+
+function getCurrentLetterStats() {
+    let userInput = document.getElementById("user-input");
+    let currentWord = currentTargetWords[currentWordIndex];
+    let typedWord = userInput ? userInput.value : "";
+    let correct = 0;
+    let wrong = 0;
+
+    if (!currentWord) {
+        return { correct: 0, wrong: 0 };
+    }
+
+    for (let i = 0; i < typedWord.length; i++) {
+        if (typedWord[i] === currentWord[i]) {
+            correct++;
+        } else {
+            wrong++;
+        }
+    }
+
+    return { correct: correct, wrong: wrong };
 }
