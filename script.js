@@ -6,7 +6,8 @@ let timeLeft = 60;
 let timerInterval;
 let isTestRunning = false;
 
-let currentTargetText = "";
+let currentTargetWords = [];
+let currentWordIndex = 0;
 let totalCorrectWords = 0;
 
 // Listeden rastgele kelime secip html div icine ekleyen fonksiyon
@@ -14,23 +15,31 @@ function generateRandomWords() {
     let targetDiv = document.getElementById("target-text");
     if (!targetDiv) return;
 
-    let chosenWords = [];
+    currentTargetWords = [];
+    currentWordIndex = 0;
+    targetDiv.innerHTML = "";
 
     // 10 rastgele kelime secelim
     for (let i = 0; i < 10; i++) {
         let randomIndex = Math.floor(Math.random() * wordsList.length);
-        chosenWords.push(wordsList[randomIndex]);
+        currentTargetWords.push(wordsList[randomIndex]);
     }
 
-    currentTargetText = chosenWords.join(" ");
-    targetDiv.innerHTML = "";
+    for (let i = 0; i < currentTargetWords.length; i++) {
+        let wordSpan = document.createElement("span");
+        wordSpan.className = "target-word";
 
-    // Her karakteri ayri span icine koyarak dogruluk rengini gosterelim
-    for (let i = 0; i < currentTargetText.length; i++) {
-        let charSpan = document.createElement("span");
-        charSpan.textContent = currentTargetText[i];
-        targetDiv.appendChild(charSpan);
+        for (let j = 0; j < currentTargetWords[i].length; j++) {
+            let charSpan = document.createElement("span");
+            charSpan.className = "target-char";
+            charSpan.textContent = currentTargetWords[i][j];
+            wordSpan.appendChild(charSpan);
+        }
+
+        targetDiv.appendChild(wordSpan);
     }
+
+    updateTargetWordStyles();
 }
 
 window.onload = function() {
@@ -44,15 +53,19 @@ function prepareTest() {
 
     isTestRunning = false;
     timeLeft = 60;
+    currentWordIndex = 0;
     totalCorrectWords = 0;
 
     if (timerInterval) clearInterval(timerInterval);
     if (timeDisplay) timeDisplay.innerText = timeLeft;
 
+    updateTargetWordStyles();
+
     if (userInput) {
         userInput.value = "";
         userInput.disabled = false;
         userInput.oninput = handleTyping;
+        userInput.onkeydown = handleKeyDown;
         userInput.focus();
     }
 }
@@ -91,33 +104,101 @@ function handleTyping() {
     let userInput = document.getElementById("user-input");
     if (!userInput) return;
 
-    let typedText = userInput.value;
-
-    if (!isTestRunning && typedText.length > 0) {
+    if (!isTestRunning && userInput.value.length > 0) {
         startTimer();
     }
 
-    let targetTextSpans = document.getElementById("target-text").querySelectorAll("span");
+    if (/\s/.test(userInput.value)) {
+        submitCurrentWord();
+        return;
+    }
 
-    for (let i = 0; i < targetTextSpans.length; i++) {
-        let charSpan = targetTextSpans[i];
-        let typedChar = typedText[i];
+    updateCurrentWordFeedback();
+}
 
-        if (typedChar == null) {
-            charSpan.classList.remove("correct");
-            charSpan.classList.remove("incorrect");
-        } else if (typedChar === charSpan.textContent) {
-            charSpan.classList.add("correct");
-            charSpan.classList.remove("incorrect");
+function handleKeyDown(event) {
+    if (event.key !== " " && event.key !== "Enter") {
+        return;
+    }
+
+    event.preventDefault();
+    submitCurrentWord();
+}
+
+function submitCurrentWord() {
+    let userInput = document.getElementById("user-input");
+    if (!userInput) return;
+
+    let typedWord = userInput.value.trim();
+    if (typedWord === "") {
+        userInput.value = "";
+        return;
+    }
+
+    if (!isTestRunning) {
+        startTimer();
+    }
+
+    let currentWord = currentTargetWords[currentWordIndex];
+    let currentSpan = getCurrentWordSpan();
+
+    if (typedWord === currentWord) {
+        totalCorrectWords++;
+        if (currentSpan) currentSpan.classList.add("completed-word");
+    } else {
+        userInput.value = typedWord;
+        updateCurrentWordFeedback();
+        return;
+    }
+
+    currentWordIndex++;
+    userInput.value = "";
+
+    if (currentWordIndex >= currentTargetWords.length) {
+        generateRandomWords();
+    } else {
+        updateTargetWordStyles();
+    }
+}
+
+function updateCurrentWordFeedback() {
+    let userInput = document.getElementById("user-input");
+    let currentSpan = getCurrentWordSpan();
+    if (!userInput || !currentSpan) return;
+
+    let typedWord = userInput.value;
+    let currentWord = currentTargetWords[currentWordIndex];
+    let charSpans = currentSpan.querySelectorAll(".target-char");
+
+    for (let i = 0; i < charSpans.length; i++) {
+        charSpans[i].classList.remove("correct", "incorrect");
+    }
+
+    if (typedWord === "") {
+        return;
+    }
+
+    for (let i = 0; i < typedWord.length && i < charSpans.length; i++) {
+        if (typedWord[i] === currentWord[i]) {
+            charSpans[i].classList.add("correct");
         } else {
-            charSpan.classList.add("incorrect");
-            charSpan.classList.remove("correct");
+            charSpans[i].classList.add("incorrect");
         }
     }
+}
 
-    if (typedText === currentTargetText) {
-        totalCorrectWords += 10;
-        userInput.value = "";
-        generateRandomWords();
+function updateTargetWordStyles() {
+    let wordSpans = document.querySelectorAll("#target-text .target-word");
+
+    for (let i = 0; i < wordSpans.length; i++) {
+        wordSpans[i].classList.remove("current-word");
+
+        if (i === currentWordIndex) {
+            wordSpans[i].classList.add("current-word");
+        }
     }
+}
+
+function getCurrentWordSpan() {
+    return document.querySelectorAll("#target-text .target-word")[currentWordIndex];
 }
