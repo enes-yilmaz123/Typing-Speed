@@ -1,19 +1,16 @@
-/* --- GENEL AYARLAR --- */
+/* --- ORTAK AYARLAR --- */
 body {
-    background-color: #0f172a; /* Gece mavisi arka plan */
+    background-color: #0f172a; 
     color: #ffffff;
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* İçeriği dikeyde ve yatayda tam ortalar */
-    position: relative;
+    overflow-x: hidden; /* Ekrandan taşan klavyenin yatay scroll bar (kaydırma çubuğu) oluşturmasını engeller */
 }
 
-/* --- ÜST HEADER BAR --- */
+/* ========================================================= */
+/* --- SADECE INDEX.HTML (ANA MENÜ) İÇİN GEÇERLİ STİLLER --- */
+/* ========================================================= */
+
 .header-bar {
     position: absolute;
     top: 0;
@@ -23,10 +20,9 @@ body {
     padding: 12px 0;
     box-sizing: border-box;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    z-index: 10;
+    z-index: 20;
 }
 
-/* Animasyonlu Başlık */
 .game-title {
     font-size: 38px;
     font-weight: 900;
@@ -44,73 +40,120 @@ body {
 @keyframes typing { from { width: 0 } to { width: 12ch; } }
 @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #4ade80; } }
 
-/* --- ANA MENÜ KONTEYNER --- */
 .menu-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding-top: 40px; 
+    box-sizing: border-box;
     text-align: center;
-    max-width: 600px;
 }
 
 .menu-description {
     font-size: 20px;
-    color: #94a3b8; /* Hafif soluk gri-mavi */
-    margin-bottom: 40px;
+    color: #94a3b8; 
+    margin: 0 0 50px 0;
     letter-spacing: 1px;
+    z-index: 10;
+    position: relative;
 }
 
-/* --- YENİLENMİŞ BUTON TASARIMI --- */
+/* --- BUTON TASARIMI --- */
 .button-link {
     text-decoration: none;
+    z-index: 15; 
+    position: relative;
 }
 
 #menu-start-button {
-    padding: 18px 50px;
-    background-color: #9238f8; /* Ana mor renk */
+    padding: 20px 60px;
+    background-color: #9238f8; 
     color: #ffffff;
     border: none;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 900;
     letter-spacing: 3px;
     cursor: pointer;
     border-radius: 12px;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 8px 15px rgba(146, 56, 248, 0.3);
+    box-shadow: 0 8px 25px rgba(146, 56, 248, 0.5);
     position: relative;
-    overflow: hidden;
 }
 
-/* Buton Hover (Üzerine Gelince) Efekti */
 #menu-start-button:hover {
-    transform: translateY(-5px) scale(1.05); /* Yukarı zıplama ve hafif büyüme */
-    background-color: #a855f7; /* Rengi biraz daha aç */
-    box-shadow: 0 12px 25px rgba(146, 56, 248, 0.6); /* Parlamayı artır */
+    transform: translateY(-5px) scale(1.05); 
+    background-color: #a855f7; 
+    box-shadow: 0 15px 35px rgba(146, 56, 248, 0.8); 
 }
 
-/* Butona basıldığında (click) efekti */
 #menu-start-button:active {
     transform: translateY(-2px) scale(0.98);
 }
 
-/* --- OYUN ALANI (DİĞER DOSYALAR İÇİN) --- */
+/* --- EKRANDAN TAŞAN DEVASA SAYDAM KLAVYE --- */
+.keyboard-decoration {
+    margin-top: -220px; /* Klavyeyi yukarı, butonun tam arkasına çeker */
+    display: flex;
+    flex-direction: column;
+    gap: 25px; 
+    opacity: 0.1; /* Bu kadar büyük bir element göz yormasın diye saydamlık azaltıldı */
+    pointer-events: none; 
+    user-select: none; 
+    z-index: 5; 
+    position: relative;
+}
+
+.key-row {
+    display: flex;
+    justify-content: center;
+    gap: 25px; 
+}
+
+.key {
+    width: 100px; /* Tuşlar pencereyi taşacak şekilde devleştirildi */
+    height: 100px; 
+    background-color: rgba(30, 41, 59, 0.6); 
+    border: 3px solid rgba(146, 56, 248, 0.5); 
+    border-radius: 25px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 80px; /* Yazı boyutu devleştirildi */
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.6); 
+    box-shadow: inset 0 0 30px rgba(146, 56, 248, 0.15), 0 10px 20px rgba(0, 0, 0, 0.6);
+}
+
+.space-bar {
+    width: 1260px; /* Boşluk tuşu orantılı olarak büyütüldü */
+}
+
+/* ======================================================== */
+/* --- SADECE GAME.HTML (OYUN EKRANI) İÇİN KALAN KISIM ---  */
+/* ======================================================== */
 #target-text {
-    background-color: #1e293b;
-    color: #f8fafc;
-    padding: 20px;
+    background-color: #1e293b; 
+    color: #f8fafc;            
+    padding: 15px;
     border: 2px solid #043d55;
-    width: 450px;
-    font-size: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    width: 400px;
+    font-size: 18px;
 }
 
 #user-input {
     background-color: #1e293b;
     color: #ffffff;
     border: 2px solid #043d55;
-    border-radius: 8px;
     font-size: 16px;
-    padding: 12px;
-    width: 450px;
+    padding: 10px;
 }
 
 .correct { color: #4ade80; }
-.incorrect { color: #f87171; background-color: rgba(248, 113, 113, 0.1); border-radius: 4px; }
+.incorrect { 
+    color: #f87171; 
+    background-color: rgba(248, 113, 113, 0.2); 
+    border-radius: 3px;
+}
