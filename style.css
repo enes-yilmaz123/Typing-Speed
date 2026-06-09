@@ -1,91 +1,116 @@
-/* bütün css kodları */
+/* --- GENEL AYARLAR --- */
 body {
-    background-color: #0f172a; /* gece mavisi arka plan */
-    color: #ffffff;            /* Yazı rengi*/
-    font-family: Arial, sans-serif;
-    position: relative;
-    min-height: 100vh;
+    background-color: #0f172a; /* Gece mavisi arka plan */
+    color: #ffffff;
+    font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* İçeriği dikeyde ve yatayda tam ortalar */
+    position: relative;
 }
 
-/* Pencere kenarlarına kadar uzanan üst dikdörtgen şerit */
+/* --- ÜST HEADER BAR --- */
 .header-bar {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #131c2c; /* Ana arka plana çok yakın, zarif bir ton */
+    background-color: #131c2c;
     padding: 12px 0;
     box-sizing: border-box;
-    /* Kenarlık çizgisi kaldırıldı, sadece siyah gölge bırakıldı */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    z-index: 10;
 }
 
-/* Daktilo & Terminal Animasyonlu Başlık */
+/* Animasyonlu Başlık */
 .game-title {
-    font-size: 38px; /* Üst barın içerisine tam oturması için dengeli boyut */
+    font-size: 38px;
     font-weight: 900;
     color: #ffffff;
-    font-family: 'Courier New', Courier, monospace; /* Terminal yazı tipi */
-    text-shadow: 0 0 10px #9238f8, 0 0 20px #9238f8, 0 0 40px #9238f8; /* Mor neon efekti */
-    border-right: 5px solid #4ade80; /* Yeşil renkte yanıp sönen imleç */
+    font-family: 'Courier New', Courier, monospace;
+    text-shadow: 0 0 10px #9238f8, 0 0 20px #9238f8;
+    border-right: 5px solid #4ade80;
     white-space: nowrap;
     overflow: hidden;
-    margin: 0 0 0 40px; /* Sol üst köşedeki yerini koruması için */
-    width: 12ch; /* "TYPING SPEED" tam 12 karakter olduğu için */
-    
-    /* Animasyonları tetikliyoruz */
+    margin: 0 0 0 40px;
+    width: 12ch;
     animation: typing 1.5s steps(12, end), blink-caret 0.8s step-end infinite;
 }
 
-/* Animasyon Keyframe'leri */
-@keyframes typing {
-    from { width: 0 }
-    to { width: 12ch; }
+@keyframes typing { from { width: 0 } to { width: 12ch; } }
+@keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #4ade80; } }
+
+/* --- ANA MENÜ KONTEYNER --- */
+.menu-container {
+    text-align: center;
+    max-width: 600px;
 }
 
-@keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: #4ade80; }
+.menu-description {
+    font-size: 20px;
+    color: #94a3b8; /* Hafif soluk gri-mavi */
+    margin-bottom: 40px;
+    letter-spacing: 1px;
 }
 
-/* metnin durduğu kutunun ayarları */
+/* --- YENİLENMİŞ BUTON TASARIMI --- */
+.button-link {
+    text-decoration: none;
+}
+
+#menu-start-button {
+    padding: 18px 50px;
+    background-color: #9238f8; /* Ana mor renk */
+    color: #ffffff;
+    border: none;
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 8px 15px rgba(146, 56, 248, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Buton Hover (Üzerine Gelince) Efekti */
+#menu-start-button:hover {
+    transform: translateY(-5px) scale(1.05); /* Yukarı zıplama ve hafif büyüme */
+    background-color: #a855f7; /* Rengi biraz daha aç */
+    box-shadow: 0 12px 25px rgba(146, 56, 248, 0.6); /* Parlamayı artır */
+}
+
+/* Butona basıldığında (click) efekti */
+#menu-start-button:active {
+    transform: translateY(-2px) scale(0.98);
+}
+
+/* --- OYUN ALANI (DİĞER DOSYALAR İÇİN) --- */
 #target-text {
-    background-color: #1e293b; /* arka plandan biraz daha açık bir mavi */
-    color: #f8fafc;            /* kutunun içindeki yazının rengi */
-    padding: 15px;
+    background-color: #1e293b;
+    color: #f8fafc;
+    padding: 20px;
     border: 2px solid #043d55;
-    width: 400px;
-    font-size: 18px;
+    width: 450px;
+    font-size: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 
-/* kullanıcının yazı yazacağı kutu */
 #user-input {
     background-color: #1e293b;
     color: #ffffff;
     border: 2px solid #043d55;
+    border-radius: 8px;
     font-size: 16px;
-    padding: 10px;
+    padding: 12px;
+    width: 450px;
 }
 
-/* butonların ortak tasarımı */
-#menu-start-button {
-    padding: 12px 25px;
-    background-color: #9238f8; /* buton rengi */
-    color: #0f172a;            /* Buton yazısı rengi */
-    border: none;
-    font-size: 16px;
-    font-weight: bold;         /* yazıyı kalın yapar */
-    cursor: pointer;           /* fare üzerine gelince el işareti çıksın */
-}
-
-/*yazının doğruluğuna göre renk değiştirme*/
-.correct {
-    color: #4ade80; 
-}
-
-.incorrect {
-    color: #f87171; 
-    background-color: rgba(248, 113, 113, 0.2); /* yanlış yazılan kelimelerin arka planını hafif kırmızı yapar */   
-    border-radius: 3px;
-}
+.correct { color: #4ade80; }
+.incorrect { color: #f87171; background-color: rgba(248, 113, 113, 0.1); border-radius: 4px; }
