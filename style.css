@@ -1,11 +1,173 @@
-/* bütün css kodları */
+/* --- ORTAK AYARLAR --- */
 body {
-    background-color: #0f172a; /* gece mavisi arka plan */
-    color: #ffffff;            /* Yazı rengi*/
+    background-color: #0f172a; 
+    color: #ffffff;
     font-family: Arial, sans-serif;
+    margin: 0;
+    overflow-x: hidden; /* Ekrandan taşan klavyenin yatay scroll bar (kaydırma çubuğu) oluşturmasını engeller */
 }
 
-/* metnin durduğu kutunun ayarları*/
+/* ========================================================= */
+/* --- SADECE INDEX.HTML (ANA MENÜ) İÇİN GEÇERLİ STİLLER --- */
+/* ========================================================= */
+
+.header-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #131c2c;
+    padding: 12px 0;
+    box-sizing: border-box;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    z-index: 20;
+}
+
+.game-title {
+    font-size: 38px;
+    font-weight: 900;
+    color: #ffffff;
+    font-family: 'Courier New', Courier, monospace;
+    text-shadow: 0 0 10px #9238f8, 0 0 20px #9238f8;
+    border-right: 5px solid #4ade80;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0 0 0 40px;
+    width: 12ch;
+    animation: typing 1.5s steps(12, end), blink-caret 0.8s step-end infinite;
+}
+
+@keyframes typing { from { width: 0 } to { width: 12ch; } }
+@keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #4ade80; } }
+
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding-top: 40px; 
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.menu-description {
+    font-size: 20px;
+    color: #94a3b8; 
+    margin: 0 0 50px 0;
+    letter-spacing: 1px;
+    z-index: 10;
+    position: relative;
+}
+
+/* --- BUTON TASARIMI --- */
+.button-link {
+    text-decoration: none;
+    z-index: 15; 
+    position: relative;
+}
+
+#menu-start-button {
+    padding: 20px 60px;
+    background-color: #9238f8; 
+    color: #ffffff;
+    border: none;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 8px 25px rgba(146, 56, 248, 0.5);
+    position: relative;
+}
+
+#menu-start-button:hover {
+    transform: translateY(-5px) scale(1.05); 
+    background-color: #a855f7; 
+    box-shadow: 0 15px 35px rgba(146, 56, 248, 0.8); 
+}
+
+#menu-start-button:active {
+    transform: translateY(-2px) scale(0.98);
+}
+
+/* --- EKRANDAN TAŞAN DEVASA SAYDAM KLAVYE --- */
+.keyboard-decoration {
+    margin-top: -220px; /* Klavyeyi yukarı, butonun tam arkasına çeker */
+    display: flex;
+    flex-direction: column;
+    gap: 25px; 
+    opacity: 0.15; 
+    pointer-events: none; 
+    user-select: none; 
+    z-index: 5; 
+    position: relative;
+}
+
+.key-row {
+    display: flex;
+    justify-content: center;
+    gap: 25px; 
+}
+
+.key {
+    width: 100px; 
+    height: 100px; 
+    background-color: rgba(30, 41, 59, 0.6); 
+    border: 3px solid rgba(146, 56, 248, 0.5); 
+    border-radius: 25px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 80px; 
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.6); 
+    box-shadow: inset 0 0 30px rgba(146, 56, 248, 0.15), 0 10px 20px rgba(0, 0, 0, 0.6);
+    transition: all 0.3s ease;
+}
+
+/* --- ÇOK DAHA BELİRGİN QWERTY VURGUSU --- */
+.highlight-qwerty {
+    color: #4ade80; 
+    background-color: rgba(74, 222, 128, 0.15); 
+    border-color: #4ade80; 
+    box-shadow: inset 0 0 40px rgba(74, 222, 128, 0.4), 0 0 30px rgba(74, 222, 128, 0.4); 
+    text-shadow: 0 0 10px #4ade80, 0 0 25px #4ade80, 0 0 40px #4ade80; 
+}
+
+.space-bar {
+    width: 1260px; 
+}
+
+/* --- YENİ EKLENEN: ALT BİLGİ (FOOTER) ÇUBUĞU --- */
+.footer-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #131c2c; /* Üstteki dikdörtgen ile aynı renk */
+    padding: 12px 0;
+    box-sizing: border-box;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.4); /* Gölge yukarı doğru veriliyor */
+    z-index: 20;
+    text-align: center;
+}
+
+.footer-bar p {
+    margin: 0;
+    color: #94a3b8; /* Yazı rengi üstteki açıklama metni ile uyumlu */
+    font-family: 'Courier New', Courier, monospace; /* Terminal temasıyla uyumlu font */
+    font-size: 14px;
+    letter-spacing: 1.5px;
+}
+
+/* ======================================================== */
+/* --- SADECE GAME.HTML (OYUN EKRANI) İÇİN KALAN KISIM ---  */
+/* ======================================================== */
+
+/* metnin durduğu kutunun ayarları */
 #target-text {
     background-color: #1e293b; /* arka plandan biraz daha açık bir mavi */
     color: #f8fafc;            /* kutunun içindeki yazının rengi */
@@ -24,16 +186,6 @@ body {
     padding: 10px;
 }
 
-/* butonların ortak tasarımı */
-#menu-start-button {
-    padding: 12px 25px;
-    background-color: #9238f8; /* buton rengi */
-    color: #0f172a;            /* Buton yazısı rengi */
-    border: none;
-    font-size: 16px;
-    font-weight: bold;         /* yazıyı kalın yapar */
-    cursor: pointer;           /* fare üzerine gelince el işareti çıksın */
-}
 /*yazının doğruluğuna göre renk değiştirme*/
 .correct {
     color: #4ade80; 
