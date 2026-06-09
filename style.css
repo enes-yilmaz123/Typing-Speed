@@ -25,7 +25,7 @@ body {
 }
 
 /* butonların ortak tasarımı */
-#start-button, #menu-start-button {
+#menu-start-button {
     padding: 12px 25px;
     background-color: #9238f8; /* buton rengi */
     color: #0f172a;            /* Buton yazısı rengi */
