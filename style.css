@@ -5,7 +5,37 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* metnin durduğu kutunun ayarları*/
+/* Daktilo & Terminal Animasyonlu Başlık (Korunan Kısım) */
+.game-title {
+    display: inline-block; /* <center> içinde animasyonun bozulmaması için gerekli */
+    font-size: 72px;
+    font-weight: 900;
+    color: #ffffff;
+    font-family: 'Courier New', Courier, monospace; /* Terminal yazı tipi */
+    text-shadow: 0 0 10px #9238f8, 0 0 20px #9238f8, 0 0 40px #9238f8; /* Mor neon efekti */
+    border-right: 5px solid #4ade80; /* Yeşil renkte yanıp sönen imleç */
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0 0 15px 0;
+    width: 12ch; /* "TYPING SPEED" tam 12 karakter olduğu için */
+    text-align: left;
+    
+    /* Animasyonları tetikliyoruz */
+    animation: typing 1.5s steps(12, end), blink-caret 0.8s step-end infinite;
+}
+
+/* Animasyon Keyframe'leri */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 12ch; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #4ade80; }
+}
+
+/* metnin durduğu kutunun ayarları (Eski Hali) */
 #target-text {
     background-color: #1e293b; /* arka plandan biraz daha açık bir mavi */
     color: #f8fafc;            /* kutunun içindeki yazının rengi */
@@ -15,7 +45,7 @@ body {
     font-size: 18px;
 }
 
-/* kullanıcının yazı yazacağı kutu */
+/* kullanıcının yazı yazacağı kutu (Eski Hali) */
 #user-input {
     background-color: #1e293b;
     color: #ffffff;
@@ -24,8 +54,8 @@ body {
     padding: 10px;
 }
 
-/* butonların ortak tasarımı */
-#start-button, #menu-start-button {
+/* butonların ortak tasarımı (Eski Hali) */
+#menu-start-button {
     padding: 12px 25px;
     background-color: #9238f8; /* buton rengi */
     color: #0f172a;            /* Buton yazısı rengi */
@@ -34,7 +64,8 @@ body {
     font-weight: bold;         /* yazıyı kalın yapar */
     cursor: pointer;           /* fare üzerine gelince el işareti çıksın */
 }
-/*yazının doğruluğuna göre renk değiştirme*/
+
+/*yazının doğruluğuna göre renk değiştirme (Eski Hali)*/
 .correct {
     color: #4ade80; 
 }
