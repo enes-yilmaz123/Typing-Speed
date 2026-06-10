@@ -191,15 +191,19 @@ body {
     color: #f8fafc;
 }
 
-/* metnin durduğu kutunun ayarları */
 #target-text {
-    font-family: 'Courier New', Courier, monospace; /* Yazılar terminal fontu oldu */
-    text-align: left; /* Kutunun içi sola yaslı ama kutu ortada */
-    background-color: #1e293b; /* arka plandan biraz daha açık bir mavi */
-    color: #f8fafc;            /* kutunun içindeki yazının rengi */
+    font-family: 'Courier New', Courier, monospace; 
+    text-align: center; /* Kelimeleri tam ortaya hizalar */
+    background-color: #1e293b; 
+    color: #f8fafc;            
     padding: 15px;
     border: 2px solid #043d55;
-    width: min(620px, 90vw);
+    
+    /* DEĞİŞEN VE EKLENEN KISIMLAR BURASI */
+    width: min(1000px, 95vw); 
+    white-space: nowrap; /* Kelimelerin alt satıra inmesini kesinlikle yasaklar */
+    overflow: hidden;    /* Kutudan dışarı taşmasını engeller */
+    
     font-size: 20px;
     line-height: 1.6;
     border-radius: 8px;
@@ -233,13 +237,16 @@ body {
 
 /* kullanıcının yazı yazacağı kutu */
 #user-input {
-    font-family: 'Courier New', Courier, monospace; /* Kullanıcı da terminal fontuyla yazacak */
+    font-family: 'Courier New', Courier, monospace; 
     background-color: #1e293b;
     color: #ffffff;
     border: 2px solid #334155;
     border-radius: 8px;
     box-sizing: border-box;
-    width: min(620px, 90vw);
+    
+    /* DEĞİŞEN KISIM BURASI */
+    width: min(1000px, 95vw);
+    
     height: 56px;
     font-size: 20px;
     line-height: 1.5;
