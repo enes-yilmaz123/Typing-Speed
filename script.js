@@ -6,31 +6,44 @@ let timeLeft = 60;
 let timerInterval;
 let isTestRunning = false;
 
-let currentTargetText = "";
+let currentTargetWords = [];
+let currentWordIndex = 0;
 let totalCorrectWords = 0;
+let totalCorrectLetters = 0;
+let totalWrongWords = 0;
+let totalWrongLetters = 0;
+let lastWrongAttempt = "";
 
 // Listeden rastgele kelime secip html div icine ekleyen fonksiyon
 function generateRandomWords() {
     let targetDiv = document.getElementById("target-text");
     if (!targetDiv) return;
 
-    let chosenWords = [];
+    currentTargetWords = [];
+    currentWordIndex = 0;
+    targetDiv.innerHTML = "";
 
     // 10 rastgele kelime secelim
     for (let i = 0; i < 10; i++) {
         let randomIndex = Math.floor(Math.random() * wordsList.length);
-        chosenWords.push(wordsList[randomIndex]);
+        currentTargetWords.push(wordsList[randomIndex]);
     }
 
-    currentTargetText = chosenWords.join(" ");
-    targetDiv.innerHTML = "";
+    for (let i = 0; i < currentTargetWords.length; i++) {
+        let wordSpan = document.createElement("span");
+        wordSpan.className = "target-word";
 
-    // Her karakteri ayri span icine koyarak dogruluk rengini gosterelim
-    for (let i = 0; i < currentTargetText.length; i++) {
-        let charSpan = document.createElement("span");
-        charSpan.textContent = currentTargetText[i];
-        targetDiv.appendChild(charSpan);
+        for (let j = 0; j < currentTargetWords[i].length; j++) {
+            let charSpan = document.createElement("span");
+            charSpan.className = "target-char";
+            charSpan.textContent = currentTargetWords[i][j];
+            wordSpan.appendChild(charSpan);
+        }
+
+        targetDiv.appendChild(wordSpan);
     }
+
+    updateTargetWordStyles();
 }
 
 window.onload = function() {
@@ -44,17 +57,27 @@ function prepareTest() {
 
     isTestRunning = false;
     timeLeft = 60;
+    currentWordIndex = 0;
     totalCorrectWords = 0;
+    totalCorrectLetters = 0;
+    totalWrongLetters = 0;
+    totalWrongWords = 0;
+    lastWrongAttempt = "";
 
     if (timerInterval) clearInterval(timerInterval);
     if (timeDisplay) timeDisplay.innerText = timeLeft;
+
+    updateTargetWordStyles();
 
     if (userInput) {
         userInput.value = "";
         userInput.disabled = false;
         userInput.oninput = handleTyping;
+        userInput.onkeydown = handleKeyDown;
         userInput.focus();
     }
+
+    updateStats();
 }
 
 function startTimer() {
@@ -67,10 +90,13 @@ function startTimer() {
     let timeDisplay = document.getElementById("time");
     let userInput = document.getElementById("user-input");
 
+    updateStats();
+
     timerInterval = setInterval(function() {
         timeLeft--;
 
         if (timeDisplay) timeDisplay.innerText = timeLeft;
+        updateStats();
 
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
@@ -91,33 +117,155 @@ function handleTyping() {
     let userInput = document.getElementById("user-input");
     if (!userInput) return;
 
-    let typedText = userInput.value;
-
-    if (!isTestRunning && typedText.length > 0) {
+    if (!isTestRunning && userInput.value.length > 0) {
         startTimer();
     }
 
-    let targetTextSpans = document.getElementById("target-text").querySelectorAll("span");
+    if (/\s/.test(userInput.value)) {
+        submitCurrentWord();
+        return;
+    }
 
-    for (let i = 0; i < targetTextSpans.length; i++) {
-        let charSpan = targetTextSpans[i];
-        let typedChar = typedText[i];
+    updateCurrentWordFeedback();
+    if (userInput.value.trim() !== lastWrongAttempt) {
+        lastWrongAttempt = "";
+    }
+    updateStats();
+}
 
-        if (typedChar == null) {
-            charSpan.classList.remove("correct");
-            charSpan.classList.remove("incorrect");
-        } else if (typedChar === charSpan.textContent) {
-            charSpan.classList.add("correct");
-            charSpan.classList.remove("incorrect");
+function handleKeyDown(event) {
+    if (event.key !== " " && event.key !== "Enter") {
+        return;
+    }
+
+    event.preventDefault();
+    submitCurrentWord();
+}
+
+function submitCurrentWord() {
+    let userInput = document.getElementById("user-input");
+    if (!userInput) return;
+
+    let typedWord = userInput.value.trim();
+    if (typedWord === "") {
+        userInput.value = "";
+        return;
+    }
+
+    if (!isTestRunning) {
+        startTimer();
+    }
+
+    let currentWord = currentTargetWords[currentWordIndex];
+    let currentSpan = getCurrentWordSpan();
+
+    if (typedWord === currentWord) {
+        totalCorrectWords++;
+        totalCorrectLetters += typedWord.length;
+        lastWrongAttempt = "";
+        if (currentSpan) currentSpan.classList.add("completed-word");
+    } else {
+        if (typedWord !== lastWrongAttempt) {
+            totalWrongWords++;
+            lastWrongAttempt = typedWord;
+        }
+        if (currentSpan) currentSpan.classList.add("missed-word");
+        
+        // Yanlış kelime atlandığında harfleri kasaya kaydetme eklentisi
+        let currentStats = getCurrentLetterStats();
+        totalWrongLetters += currentStats.wrong;
+    }
+
+    currentWordIndex++;
+    userInput.value = "";
+
+    if (currentWordIndex >= currentTargetWords.length) {
+        generateRandomWords();
+    } else {
+        updateTargetWordStyles();
+    }
+
+    updateStats();
+}
+
+function updateCurrentWordFeedback() {
+    let userInput = document.getElementById("user-input");
+    let currentSpan = getCurrentWordSpan();
+    if (!userInput || !currentSpan) return;
+
+    let typedWord = userInput.value;
+    let currentWord = currentTargetWords[currentWordIndex];
+    let charSpans = currentSpan.querySelectorAll(".target-char");
+
+    for (let i = 0; i < charSpans.length; i++) {
+        charSpans[i].classList.remove("correct", "incorrect");
+    }
+
+    if (typedWord === "") {
+        return;
+    }
+
+    for (let i = 0; i < typedWord.length && i < charSpans.length; i++) {
+        if (typedWord[i] === currentWord[i]) {
+            charSpans[i].classList.add("correct");
         } else {
-            charSpan.classList.add("incorrect");
-            charSpan.classList.remove("correct");
+            charSpans[i].classList.add("incorrect");
+        }
+    }
+}
+
+function updateTargetWordStyles() {
+    let wordSpans = document.querySelectorAll("#target-text .target-word");
+
+    for (let i = 0; i < wordSpans.length; i++) {
+        wordSpans[i].classList.remove("current-word");
+
+        if (i === currentWordIndex) {
+            wordSpans[i].classList.add("current-word");
+        }
+    }
+}
+
+function getCurrentWordSpan() {
+    return document.querySelectorAll("#target-text .target-word")[currentWordIndex];
+}
+
+function updateStats() {
+    let userInput = document.getElementById("user-input");
+    let wpmDisplay = document.getElementById("wpm");
+    let correctLettersDisplay = document.getElementById("correct-letters");
+    let wrongLettersDisplay = document.getElementById("wrong-letters");
+    let wrongWordsDisplay = document.getElementById("wrong-words");
+
+    let currentStats = getCurrentLetterStats();
+    let elapsedSeconds = 60 - timeLeft;
+    let wpm = elapsedSeconds > 0 ? Math.round(totalCorrectWords / (elapsedSeconds / 60)) : 0;
+
+    if (wpmDisplay) wpmDisplay.innerText = wpm;
+    if (correctLettersDisplay) correctLettersDisplay.innerText = totalCorrectLetters + currentStats.correct;
+    // Yanlış harflerin toplamını ekrana yazdırma eklentisi
+    if (wrongLettersDisplay) wrongLettersDisplay.innerText = totalWrongLetters + currentStats.wrong;
+    if (wrongWordsDisplay) wrongWordsDisplay.innerText = totalWrongWords;
+}
+
+function getCurrentLetterStats() {
+    let userInput = document.getElementById("user-input");
+    let currentWord = currentTargetWords[currentWordIndex];
+    let typedWord = userInput ? userInput.value : "";
+    let correct = 0;
+    let wrong = 0;
+
+    if (!currentWord) {
+        return { correct: 0, wrong: 0 };
+    }
+
+    for (let i = 0; i < typedWord.length; i++) {
+        if (typedWord[i] === currentWord[i]) {
+            correct++;
+        } else {
+            wrong++;
         }
     }
 
-    if (typedText === currentTargetText) {
-        totalCorrectWords += 10;
-        userInput.value = "";
-        generateRandomWords();
-    }
+    return { correct: correct, wrong: wrong };
 }

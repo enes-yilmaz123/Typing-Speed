@@ -13,10 +13,29 @@
         <div id="target-text">Loading words...</div>
         <br>
         
-        <textarea id="user-input" rows="5" cols="50" placeholder="Start typing to begin..."></textarea>
+        <input id="user-input" type="text" placeholder="Start typing to begin..." autocomplete="off">
         
         <br><br>
         <p>Time Left: <span id="time">60</span> seconds</p>
+
+        <div id="stats">
+            <div class="stat-box">
+                <span>WPM</span>
+                <strong id="wpm">0</strong>
+            </div>
+            <div class="stat-box">
+                <span>Correct Letters</span>
+                <strong id="correct-letters">0</strong>
+            </div>
+            <div class="stat-box">
+                <span>Wrong Letters</span>
+                <strong id="wrong-letters">0</strong>
+            </div>
+            <div class="stat-box">
+                <span>Wrong Words</span>
+                <strong id="wrong-words">0</strong>
+            </div>
+        </div>
         
     </center>
 

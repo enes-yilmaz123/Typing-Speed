@@ -184,17 +184,91 @@ body {
     color: #f8fafc;            /* kutunun içindeki yazının rengi */
     padding: 15px;
     border: 2px solid #043d55;
-    width: 400px;
+    width: min(620px, 90vw);
     font-size: 18px;
+    line-height: 1.6;
+    border-radius: 8px;
+}
+
+.target-word {
+    display: inline-block;
+    margin: 3px 5px;
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+
+.target-char {
+    display: inline-block;
+    border-radius: 3px;
+}
+
+.current-word {
+    background-color: rgba(56, 189, 248, 0.16);
+    box-shadow: inset 0 -2px 0 #38bdf8;
+}
+
+.completed-word {
+    color: #4ade80;
+}
+
+.missed-word {
+    color: #f87171;
+    background-color: rgba(248, 113, 113, 0.16);
 }
 
 /* kullanıcının yazı yazacağı kutu */
 #user-input {
     background-color: #1e293b;
     color: #ffffff;
-    border: 2px solid #043d55;
-    font-size: 16px;
-    padding: 10px;
+    border: 2px solid #334155;
+    border-radius: 8px;
+    box-sizing: border-box;
+    width: min(620px, 90vw);
+    height: 56px;
+    font-size: 18px;
+    line-height: 1.5;
+    padding: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#user-input:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
+}
+
+#user-input::placeholder {
+    color: #94a3b8;
+}
+
+#stats {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    width: min(620px, 90vw);
+    margin-top: 18px;
+}
+
+.stat-box {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    box-sizing: border-box;
+    min-width: 130px;
+    padding: 12px 16px;
+}
+
+.stat-box span {
+    display: block;
+    color: #94a3b8;
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.stat-box strong {
+    color: #f8fafc;
+    font-size: 24px;
 }
 
 /*yazının doğruluğuna göre renk değiştirme*/
