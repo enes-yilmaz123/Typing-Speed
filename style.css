@@ -345,3 +345,23 @@ body {
     50% { transform: scale(1.08); }
     100% { transform: scale(1); }
 }
+/* --- YENİDEN BAŞLAT BUTONU TASARIMI --- */
+.restart-button {
+    background-color: transparent;
+    color: #38bdf8;
+    border: 2px solid #38bdf8;
+    border-radius: 8px;
+    padding: 10px 25px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+}
+
+.restart-button:hover {
+    background-color: rgba(56, 189, 248, 0.1);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+    transform: scale(1.05);
+}

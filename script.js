@@ -104,11 +104,17 @@ function startTimer() {
 
             if (userInput) {
                 userInput.blur();
+                userInput.disabled = true; // Süre bitince klavyeyi kilitliyoruz
+                userInput.value = "";      // Kutunun içindeki yarım kalan yazıyı siliyoruz
             }
 
-            alert("Time is up! Game over. You typed " + totalCorrectWords + " words correctly!");
-            generateRandomWords();
-            prepareTest();
+            // Ekrandaki kelimeleri sil ve yerine RESTART butonu koy
+            let targetDiv = document.getElementById("target-text");
+            if (targetDiv) {
+                targetDiv.style.textAlign = "center"; // Butonu tam ortaya hizala
+                targetDiv.innerHTML = '<button class="restart-button" onclick="restartGame()">↻ RESTART</button>'; 
+            }
+
         }
     }, 1000);
 }
@@ -268,4 +274,13 @@ function getCurrentLetterStats() {
     }
 
     return { correct: correct, wrong: wrong };
+}
+function restartGame() {
+    let targetDiv = document.getElementById("target-text");
+    if (targetDiv) {
+        targetDiv.style.textAlign = "left"; // Yazıları tekrar sola hizala
+    }
+    // Oyunu baştan kur
+    generateRandomWords();
+    prepareTest();
 }
