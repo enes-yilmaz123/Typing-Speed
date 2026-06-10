@@ -372,3 +372,25 @@ body {
     box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
     transform: scale(1.05);
 }
+.stat-box:first-child {
+    border: 2px solid #38bdf8; 
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+    transform: scale(1.15); /* Kutuyu diğerlerine göre %15 daha büyük hale getirir */
+    margin: 0 15px; 
+    background-color: #0f172a; 
+}
+
+/* WPM Kutusunun İçindeki Sayının Tasarımı */
+.stat-box:first-child strong {
+    font-size: 36px; 
+    color: #38bdf8;
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+}
+
+/* WPM Kutusunun Üstündeki "WPM" Yazısının Tasarımı */
+.stat-box:first-child span {
+    font-size: 15px; /* Başlık yazısını da bir tık büyütürüz */
+    color: #cbd5e1;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
