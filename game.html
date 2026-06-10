@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <center>
-        <h1>Typing Speed Test</h1>
-        <p>Type the text below into the box:</p>
+    <main class="game-container">
+        <h1 class="game-title-text">Typing Speed Test</h1>
+        <p class="game-subtitle-text">Type the text below into the box:</p>
         
         <div id="target-text">Loading words...</div>
         <br>
@@ -16,7 +16,7 @@
         <input id="user-input" type="text" placeholder="Start typing to begin..." autocomplete="off">
         
         <br><br>
-        <p>Time Left: <span id="time">60</span> seconds</p>
+        <p class="game-time-text">Time Left: <span id="time">60</span> seconds</p>
 
         <div id="stats">
             <div class="stat-box">
@@ -37,7 +37,7 @@
             </div>
         </div>
         
-    </center>
+    </main>
 
     <script src="script.js"></script>
 </body>
