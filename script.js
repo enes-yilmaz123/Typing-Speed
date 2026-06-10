@@ -1,5 +1,5 @@
 // Basit ingilizce kelimeler iceren bir liste
-const wordsList = ["apple", "computer", "code", "student", "keyboard", "mouse", "screen", "project", "window", "game", "speed", "test", "coffee", "network", "system"];
+const wordsList = ["apple", "computer", "code", "student", "keyboard", "mouse", "screen", "project", "window", "game", "speed", "test", "coffee", "network", "system" , "apple", "book", "chair", "desk", "egg", "fish", "game", "home", "ice", "jump", "king", "lamp", "milk", "name", "open", "park", "queen", "rain", "sun", "tree"];
 
 // Zaman olcumu icin degiskenler
 let timeLeft = 60;

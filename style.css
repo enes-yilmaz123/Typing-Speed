@@ -298,3 +298,50 @@ body {
     background-color: rgba(248, 113, 113, 0.2); /* yanlış yazılan kelimelerin arka planını hafif kırmızı yapar */   
     border-radius: 3px;
 }
+
+.timer-box {
+    background-color: #1e293b;
+    border: 2px solid #38bdf8;
+    border-radius: 8px;
+    padding: 10px 30px;
+    margin-bottom: 25px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+    transition: all 0.3s ease;
+}
+
+.timer-label {
+    display: block;
+    color: #94a3b8;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    margin-bottom: 5px;
+}
+
+.timer-value {
+    display: block;
+    color: #f8fafc;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 34px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+}
+
+/* Son 10 saniye kala devreye girecek kırmızı alarm animasyonu */
+.timer-warning {
+    border-color: #f87171 !important;
+    box-shadow: 0 0 25px rgba(248, 113, 113, 0.4) !important;
+}
+
+.timer-warning .timer-value {
+    color: #f87171 !important;
+    animation: pulse-red 1s infinite;
+    text-shadow: 0 0 15px rgba(248, 113, 113, 0.8) !important;
+}
+
+@keyframes pulse-red {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
