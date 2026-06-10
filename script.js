@@ -284,3 +284,37 @@ function restartGame() {
     generateRandomWords();
     prepareTest();
 }
+// --- MENÜ AÇMA/KAPAMA İŞLEMLERİ ---
+function toggleMenu(menuId) {
+    // Tıklanan menü dışındaki tüm açık menüleri kapat
+    let dropdowns = document.getElementsByClassName("dropdown-content");
+    for (let i = 0; i < dropdowns.length; i++) {
+        let openDropdown = dropdowns[i];
+        if (openDropdown.id !== menuId && openDropdown.classList.contains('show-menu')) {
+            openDropdown.classList.remove('show-menu');
+        }
+    }
+    
+    // Tıklanan menünün durumunu değiştir (açıksa kapat, kapalıysa aç)
+    document.getElementById(menuId).classList.toggle("show-menu");
+}
+
+// Kullanıcı menü dışında bir yere tıklarsa tüm menüleri kapat
+window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+        let dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+            let openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show-menu')) {
+                openDropdown.classList.remove('show-menu');
+            }
+        }
+    }
+}
+function changeLanguage(selectedLang) {
+    // Butonun içindeki yazıyı seçilen dil ile değiştirir
+    document.getElementById("lang-btn").innerHTML = selectedLang + " ▾";
+    
+    // Tıklandıktan sonra menüyü kapatır
+    document.getElementById("language-menu").classList.remove("show-menu");
+}

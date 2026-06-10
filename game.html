@@ -7,6 +7,59 @@
 </head>
 <body>
     <main class="game-container">
+        
+        <!-- Settings Menu Start -->
+        <div class="settings-bar">
+            <!-- 1. Menu (Language) -->
+            <div class="dropdown-wrapper">
+                <span class="dropdown-label">Language</span>
+                <div class="dropdown">
+                    <button class="dropbtn" id="lang-btn" onclick="toggleMenu('language-menu')">English ▾</button>
+                    <div id="language-menu" class="dropdown-content">
+                        <a href="#" onclick="changeLanguage('English')">English</a>
+                        <a href="#" onclick="changeLanguage('Turkish')">Turkish</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 2. Menu (Empty) -->
+            <div class="dropdown-wrapper">
+                <span class="dropdown-label">&nbsp;</span>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="toggleMenu('menu-2')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                    <div id="menu-2" class="dropdown-content">
+                        <a href="#">Setting 1</a>
+                        <a href="#">Setting 2</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 3. Menu (Empty) -->
+            <div class="dropdown-wrapper">
+                <span class="dropdown-label">&nbsp;</span>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="toggleMenu('menu-3')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                    <div id="menu-3" class="dropdown-content">
+                        <a href="#">Setting 1</a>
+                        <a href="#">Setting 2</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 4. Menu (Empty) -->
+            <div class="dropdown-wrapper">
+                <span class="dropdown-label">&nbsp;</span>
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="toggleMenu('menu-4')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                    <div id="menu-4" class="dropdown-content">
+                        <a href="#">Setting 1</a>
+                        <a href="#">Setting 2</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Settings Menu End -->
+
         <h1 class="game-title-text">Typing Speed Test</h1>
         <p class="game-subtitle-text">Type the text below into the box:</p>
         
