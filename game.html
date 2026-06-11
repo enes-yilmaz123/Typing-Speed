@@ -6,9 +6,37 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    
+    <div class="header-bar game-header">
+        <h1 class="game-title">TYPING SPEED</h1>
+        <div class="header-actions">
+            <button class="login-btn" id="login-button">LOG IN</button>
+            <div class="profile-container" id="profile-trigger">
+                <div class="profile-circle" id="profile-avatar">G</div>
+                
+                <div class="profile-modal" id="profile-modal">
+                    <div class="modal-content">
+                        <h3>Edit Profile</h3>
+                        <div class="input-group">
+                            <label for="username-input">Your Name</label>
+                            <input type="text" id="username-input" maxlength="15" placeholder="Enter your name">
+                        </div>
+                        <div class="modal-footer-buttons">
+                            <div class="modal-buttons">
+                                <button class="modal-btn cancel" id="modal-cancel">Cancel</button>
+                                <button class="modal-btn save" id="modal-save">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <main class="game-container">
         
-        <div class="settings-bar">
+        <div class="settings-bar" style="margin-top: 60px; margin-bottom: 30px;">
             <div class="dropdown-wrapper">
                 <span class="dropdown-label" id="language-label">Language</span>
                 <div class="dropdown">
@@ -59,7 +87,6 @@
             </div>
         </div>
 
-        <h1 class="game-title-text">Typing Speed Test</h1>
         <p class="game-subtitle-text">Type the text below into the box:</p>
         
         <div id="target-text">Loading words...</div>
@@ -119,6 +146,42 @@
         </div>
         
     </main>
+
+    <footer class="game-footer game-theme-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <div class="footer-logo">TS</div>
+                <p class="footer-tagline">Test your typing speed</p>
+                <p class="footer-copyright">&copy; 2026 Typing Speed</p>
+            </div>
+            <div class="footer-center">
+                <div class="footer-column">
+                    <h3>Game</h3>
+                    <ul>
+                        <li><a href="game.html">Typing Test</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="mailto:mashumkacmaz072@gmail.com">Mahsum Kaçmaz</a></li>
+                        <li><a href="mailto:yenes991@gmail.com">Enes Yılmaz</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Link</h3>
+                    <ul>
+                        <li><a href="https://github.com/enes-yilmaz123/Typing-Speed.git" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-right">
+                <div class="footer-right-title">DEVELOPERS</div>
+                <p>Mahsum Kaçmaz - 240229077</p>
+                <p>Enes Yılmaz - 240229086</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>

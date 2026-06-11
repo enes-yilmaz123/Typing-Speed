@@ -18,7 +18,7 @@ body {
     padding: 12px 40px;
     box-sizing: border-box;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    z-index: 20;
+    z-index: 60;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -928,5 +928,98 @@ body {
         flex-direction: column;
         gap: 35px;
         align-items: center;
+    }
+}
+
+
+.game-header .game-title {
+    text-shadow: 0 0 10px #38bdf8, 0 0 20px #38bdf8;
+    border-right-color: #38bdf8;
+    animation: typing 1.5s steps(12, end), blink-caret-blue 0.8s step-end infinite;
+}
+
+@keyframes blink-caret-blue { 
+    from, to { border-color: transparent } 
+    50% { border-color: #38bdf8; } 
+}
+
+.game-header .login-btn:hover {
+    color: #38bdf8;
+    text-shadow: 0 0 8px #38bdf8;
+}
+
+/* Profil Dairesi */
+.game-header .profile-circle {
+    background-color: rgba(56, 189, 248, 0.2);
+    border-color: #38bdf8;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+.game-header .profile-circle:hover {
+    background-color: rgba(56, 189, 248, 0.4);
+    border-color: #f8fafc; /* Hover durumunda beyaza parlar */
+    box-shadow: 0 0 20px #f8fafc;
+}
+
+/* Modal Kutusu */
+.game-header .modal-content {
+    border-color: rgba(56, 189, 248, 0.6);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(56, 189, 248, 0.1);
+}
+
+.game-header .modal-content h3 {
+    text-shadow: 0 0 8px #38bdf8;
+}
+
+/* Modal Butonları */
+.game-header .modal-btn {
+    border-color: rgba(56, 189, 248, 0.5);
+    box-shadow: inset 0 0 15px rgba(56, 189, 248, 0.15), 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.game-header .modal-btn.save {
+    color: #38bdf8;
+    text-shadow: 0 0 5px rgba(56, 189, 248, 0.6);
+}
+
+.game-header .modal-btn.save:hover {
+    background-color: rgba(56, 189, 248, 0.2);
+    border-color: #f8fafc;
+    box-shadow: inset 0 0 20px rgba(56, 189, 248, 0.3), 0 0 15px #f8fafc;
+    text-shadow: 0 0 8px #f8fafc;
+}
+
+
+.game-theme-footer {
+    border-top-color: rgba(56, 189, 248, 0.4);
+    margin-top: 0; 
+}
+
+/* Logo ve Sağdaki Başlığın parlama renklerini mavi yapmak için*/
+.game-theme-footer .footer-logo,
+.game-theme-footer .footer-right-title {
+    text-shadow: 0 0 10px #38bdf8, 0 0 20px #38bdf8;
+}
+
+/* Logonun solundaki yeşil çizgiyi mavi yapmak için */
+.game-theme-footer .footer-logo {
+    border-left-color: #38bdf8;
+}
+
+/* Orta kısımdaki yeşil link başlıklarını mavi yapmak için*/
+.game-theme-footer .footer-column h3 {
+    color: #38bdf8;
+}
+
+/* Footer Linkleri hover (üstüne gelme) efekti mavi parlama */
+.game-theme-footer .footer-column ul li a:hover {
+    color: #38bdf8;
+    text-shadow: 0 0 6px rgba(56, 189, 248, 0.7);
+}
+
+/* Mobil görünüm için alt çizgi rengini mavi yapma */
+@media (max-width: 1024px) {
+    .game-theme-footer .footer-logo {
+        border-bottom-color: #38bdf8;
     }
 }
