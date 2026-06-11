@@ -54,34 +54,61 @@ window.onload = function() {
 
 // kullanici adini yerel hafizada saklayan ve degistiren fonksiyon
 function initProfileLogic() {
-    const loginButton = document.getElementById("login-button"); // YENİ: Log in butonu referansı
+    const headerActionBtn = document.getElementById("login-button"); // LOG IN / LOG OUT Butonu
     const profileTrigger = document.getElementById("profile-trigger");
     const profileModal = document.getElementById("profile-modal");
     const modalCancel = document.getElementById("modal-cancel");
     const modalSave = document.getElementById("modal-save");
-    const modalLogout = document.getElementById("modal-logout"); // YENİ: Log out butonu referansı
     const usernameInput = document.getElementById("username-input");
     const profileAvatar = document.getElementById("profile-avatar");
 
-    // Sayfa yüklendiğinde ismi yerel hafızadan çek, yoksa varsayılan olarak "Gamer" ata
+    // Kullanıcının giriş yapıp yapmadığını kontrol et
+    let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
     let savedName = localStorage.getItem("gameUsername") || "Gamer";
+
+    // Arayüzü hafızadaki verilere göre başlat
     if (profileAvatar) profileAvatar.textContent = savedName.charAt(0).toUpperCase();
     if (usernameInput) usernameInput.value = savedName;
+    
+    if (headerActionBtn) {
+        if (isLoggedIn) {
+            headerActionBtn.textContent = "LOG OUT";
+            headerActionBtn.classList.add("logout-state");
+        } else {
+            headerActionBtn.textContent = "LOG IN";
+            headerActionBtn.classList.remove("logout-state");
+        }
+    }
 
     if (!profileModal) return;
 
-    // YENİ: Log in butonuna basılınca profil modalının açılması mantığı
-    if (loginButton) {
-        loginButton.onclick = function(e) {
-            e.stopPropagation(); // Kapatma tetikleyicilerini engellemek için
-            profileModal.classList.toggle("active");
-            if (profileModal.classList.contains("active") && usernameInput) {
-                usernameInput.focus();
+    // Header butonuna (LOG IN / LOG OUT) tıklama olayları
+    if (headerActionBtn) {
+        headerActionBtn.onclick = function(e) {
+            e.stopPropagation(); 
+            
+            if (headerActionBtn.textContent === "LOG OUT") {
+                // LOG OUT İŞLEMİ: Hafızayı temizle ve arayüzü sıfırla
+                localStorage.removeItem("gameUsername");
+                localStorage.removeItem("isLoggedIn");
+                
+                if (usernameInput) usernameInput.value = "Gamer";
+                if (profileAvatar) profileAvatar.textContent = "G";
+                
+                headerActionBtn.textContent = "LOG IN";
+                headerActionBtn.classList.remove("logout-state");
+                profileModal.classList.remove("active"); // Eğer kutu açıksa kapat
+            } else {
+                // LOG IN İŞLEMİ: Sadece profil kutusunu aç
+                profileModal.classList.toggle("active");
+                if (profileModal.classList.contains("active") && usernameInput) {
+                    usernameInput.focus();
+                }
             }
         };
     }
 
-    // Profil avatarına (daireye) tıklanınca aç/kapat mantığı
+    // Profil avatarına (G) tıklayınca isim değiştirmek için her zaman kutuyu aç
     if (profileAvatar) {
         profileAvatar.onclick = function(e) {
             e.stopPropagation();
@@ -106,26 +133,25 @@ function initProfileLogic() {
             if (newName === "") {
                 newName = "Gamer";
             }
-            // İsmi yerel hafızada (localStorage) tutma mantığı
+            // İsmi kaydet ve login durumunu true yap
             localStorage.setItem("gameUsername", newName);
+            localStorage.setItem("isLoggedIn", "true");
+            
             if (profileAvatar) profileAvatar.textContent = newName.charAt(0).toUpperCase();
+            
+            // Kayıt başarılıysa header butonunu LOG OUT olarak değiştir
+            if (headerActionBtn) {
+                headerActionBtn.textContent = "LOG OUT";
+                headerActionBtn.classList.add("logout-state");
+            }
+            
             profileModal.classList.remove("active");
         };
     }
 
-    // YENİ: Log out a basınca ismi silip default olarak "Gamer" yapma mantığı
-    if (modalLogout) {
-        modalLogout.onclick = function() {
-            localStorage.removeItem("gameUsername"); // Hafızayı temizle
-            if (usernameInput) usernameInput.value = "Gamer";
-            if (profileAvatar) profileAvatar.textContent = "G";
-            profileModal.classList.remove("active");
-        };
-    }
-
-    // Modal dışına veya bağımsız alanlara tıklandığında pencereyi kapatma mantığı
+    // Modal dışına veya bağımsız alanlara tıklandığında pencereyi kapatma
     window.addEventListener("click", function(event) {
-        if (profileTrigger && !profileTrigger.contains(event.target) && loginButton && !loginButton.contains(event.target)) {
+        if (profileTrigger && !profileTrigger.contains(event.target) && headerActionBtn && !headerActionBtn.contains(event.target)) {
             profileModal.classList.remove("active");
         }
     });
