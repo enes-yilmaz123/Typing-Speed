@@ -54,22 +54,37 @@ window.onload = function() {
 
 // kullanici adini yerel hafizada saklayan ve degistiren fonksiyon
 function initProfileLogic() {
+    const loginButton = document.getElementById("login-button"); // YENİ: Log in butonu referansı
     const profileTrigger = document.getElementById("profile-trigger");
     const profileModal = document.getElementById("profile-modal");
     const modalCancel = document.getElementById("modal-cancel");
     const modalSave = document.getElementById("modal-save");
+    const modalLogout = document.getElementById("modal-logout"); // YENİ: Log out butonu referansı
     const usernameInput = document.getElementById("username-input");
     const profileAvatar = document.getElementById("profile-avatar");
 
+    // Sayfa yüklendiğinde ismi yerel hafızadan çek, yoksa varsayılan olarak "Gamer" ata
     let savedName = localStorage.getItem("gameUsername") || "Gamer";
     if (profileAvatar) profileAvatar.textContent = savedName.charAt(0).toUpperCase();
     if (usernameInput) usernameInput.value = savedName;
 
-    if (!profileTrigger || !profileModal) return;
+    if (!profileModal) return;
 
-    // Yalnızca profil avatarına (daireye) tıklanınca aç/kapat mantığı
+    // YENİ: Log in butonuna basılınca profil modalının açılması mantığı
+    if (loginButton) {
+        loginButton.onclick = function(e) {
+            e.stopPropagation(); // Kapatma tetikleyicilerini engellemek için
+            profileModal.classList.toggle("active");
+            if (profileModal.classList.contains("active") && usernameInput) {
+                usernameInput.focus();
+            }
+        };
+    }
+
+    // Profil avatarına (daireye) tıklanınca aç/kapat mantığı
     if (profileAvatar) {
-        profileAvatar.onclick = function() {
+        profileAvatar.onclick = function(e) {
+            e.stopPropagation();
             profileModal.classList.toggle("active");
             if (profileModal.classList.contains("active") && usernameInput) {
                 usernameInput.focus();
@@ -91,15 +106,26 @@ function initProfileLogic() {
             if (newName === "") {
                 newName = "Gamer";
             }
+            // İsmi yerel hafızada (localStorage) tutma mantığı
             localStorage.setItem("gameUsername", newName);
             if (profileAvatar) profileAvatar.textContent = newName.charAt(0).toUpperCase();
             profileModal.classList.remove("active");
         };
     }
 
-    // Modal dışına tıklandığında pencereyi kapatma mantığı
+    // YENİ: Log out a basınca ismi silip default olarak "Gamer" yapma mantığı
+    if (modalLogout) {
+        modalLogout.onclick = function() {
+            localStorage.removeItem("gameUsername"); // Hafızayı temizle
+            if (usernameInput) usernameInput.value = "Gamer";
+            if (profileAvatar) profileAvatar.textContent = "G";
+            profileModal.classList.remove("active");
+        };
+    }
+
+    // Modal dışına veya bağımsız alanlara tıklandığında pencereyi kapatma mantığı
     window.addEventListener("click", function(event) {
-        if (!profileTrigger.contains(event.target)) {
+        if (profileTrigger && !profileTrigger.contains(event.target) && loginButton && !loginButton.contains(event.target)) {
             profileModal.classList.remove("active");
         }
     });

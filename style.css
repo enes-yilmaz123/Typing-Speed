@@ -13,13 +13,13 @@ body {
     left: 0;
     width: 100%;
     background-color: #131c2c;
-    padding: 12px 40px;/* Sağ ve soldan 40px boşluk verildi */
+    padding: 12px 40px;
     box-sizing: border-box;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     z-index: 20;
-    display: flex;/* Başlık ve butonu yan yana hizalamak için */
+    display: flex;
     justify-content: space-between;
-    align-items: center;/* Dikeyde ortalama */
+    align-items: center;
 }
 
 .game-title {
@@ -31,7 +31,7 @@ body {
     border-right: 5px solid #4ade80;
     white-space: nowrap;
     overflow: hidden;
-    margin: 0;/* Header-bar içindeki flex düzeni için margin sıfırlandı */
+    margin: 0;
     width: 12ch;
     animation: typing 1.5s steps(12, end), blink-caret 0.8s step-end infinite;
 }
@@ -39,14 +39,12 @@ body {
 @keyframes typing { from { width: 0 } to { width: 12ch; } }
 @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #4ade80; } }
 
-/* auth ve profil aksiyonlari yerlesimi */
 .header-actions {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-/* log in butonu */
 .login-btn {
     background: none;
     border: none;
@@ -74,20 +72,65 @@ body {
     padding-top: 40px; 
     box-sizing: border-box;
     text-align: center;
+    position: relative; 
 }
 
+/* ESKİ HALİNE GETİRİLDİ: Orijinal menu description marjin ayarı */
 .menu-description {
     font-size: 24px;
     color: #94a3b8; 
-    margin: 0 0 180px 0;
+    margin: 0 0 130px 0; /* Orijinal tasarımdaki 180px boşluğa geri döndürüldü */
     letter-spacing: 2px;
     z-index: 10;
     position: relative;
 }
 
-/* ---  SAYDAM KLAVYE --- */
+/* --- START GAME NEON BUTONU (EKRANI TAM ORTALAYAN) --- */
+.action-container-absolute {
+    position: absolute;
+    top: 50%;                 
+    left: 50%;                
+    transform: translate(-50%, -50%); 
+    z-index: 30;              
+}
+
+.start-game-link {
+    text-decoration: none;
+}
+
+.neon-start-btn {
+    width: 280px;
+    height: 60px;
+    font-size: 20px;
+    font-weight: 900;
+    font-family: 'Courier New', Courier, monospace;
+    letter-spacing: 3px;
+    color: #131c2c;
+    background-color: #4ade80; 
+    border: 3px solid #4ade80;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(74, 222, 128, 0.5), 0 5px 15px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.neon-start-btn:hover {
+    color: #ffffff;
+    background-color: rgba(74, 222, 128, 0.1);
+    box-shadow: 0 0 25px #4ade80, inset 0 0 10px rgba(74, 222, 128, 0.5);
+    text-shadow: 0 0 8px #4ade80;
+    transform: translateY(-4px) scale(1.03);
+}
+
+.neon-start-btn:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow: 0 0 10px #4ade80;
+}
+
+/* --- SAYDAM KLAVYE --- */
 .keyboard-decoration {
-    margin-top: -60px;
+    margin-top: -60px; /* Orijinal klavye konumlandırmasına geri çekildi */
     display: flex;
     flex-direction: column;
     gap: 25px; 
@@ -96,7 +139,7 @@ body {
     position: relative;
 }
 
-.keyboard-decoration .key:not(.space-bar) {
+.keyboard-decoration .key {
     pointer-events: none;
     opacity: 0.15;
 }
@@ -124,7 +167,6 @@ body {
     transition: all 0.3s ease;
 }
 
-/* BELİRGİN QWERTY VURGUSU */
 .highlight-qwerty {
     color: #4ade80; 
     background-color: rgba(74, 222, 128, 0.3);
@@ -134,7 +176,6 @@ body {
     opacity: 0.3 !important;
 }
 
-/* profil dairesi konteynari */
 .profile-container {
     position: relative; 
     display: flex;
@@ -167,7 +208,6 @@ body {
     transform: scale(1.05);
 }
 
-/* absolute yapisi relative parent icine sabitlendi */
 .profile-modal {
     display: none;
     position: absolute; 
@@ -246,7 +286,6 @@ body {
     gap: 10px;
 }
 
-/* klavye tusu miras stilleri */
 .modal-btn {
     padding: 10px 18px;
     border-radius: 10px;
@@ -287,7 +326,6 @@ body {
     transform: translateY(-2px);
 }
 
-/* log out butonu */
 .logout-btn {
     background: none;
     border: none;
@@ -306,45 +344,11 @@ body {
     text-shadow: 0 0 8px #f87171;
 }
 
-.space-button-link {
-    text-decoration: none;
-    z-index: 25;
-    position: relative;
-}
-
 .space-bar {
     width: 1260px; 
-    font-size: 32px; 
-    font-weight: 900;
-    font-family: 'Courier New', Courier, monospace;
-    letter-spacing: 6px;
-    color: #9238f8;
-    background-color: rgba(146, 56, 248, 0.12);
-    border-color: #9238f8;
-    box-shadow: inset 0 0 40px rgba(146, 56, 248, 0.4), 0 10px 25px rgba(146, 56, 248, 0.2);
-    text-shadow: 0 0 10px rgba(146, 56, 248, 0.6);
-    cursor: pointer;
-    outline: none;
-    opacity: 0.85;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.space-bar:hover {
-    opacity: 1;
-    color: #ffffff;
-    background-color: rgba(146, 56, 248, 0.25);
-    border-color: #a855f7;
-    transform: translateY(-4px) scale(1.01);
-    box-shadow: inset 0 0 50px rgba(146, 56, 248, 0.6), 0 15px 30px rgba(146, 56, 248, 0.4);
-    text-shadow: 0 0 15px #ffffff, 0 0 25px #9238f8;
-}
-
-.space-bar:active {
-    transform: translateY(-1px) scale(0.99);
-    box-shadow: inset 0 0 30px rgba(146, 56, 248, 0.7), 0 5px 10px rgba(0, 0, 0, 0.5);
-}
-
-/* --- YENİ ALAN: GELİŞMİŞ ALT BİLGİ (FOOTER) TASARIMI --- */
+/* --- FOOTER TASARIMI --- */
 .game-footer {
     width: 100%;
     background-color: #131c2c; 
@@ -354,7 +358,7 @@ body {
     box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5);
     z-index: 20;
     position: relative;
-    margin-top: 60px;
+    margin-top: -70px;
 }
 
 .footer-container {
@@ -397,18 +401,17 @@ body {
     margin-top: 16px;
 }
 
-/* Ortadaki link sütunları mükemmel şekilde ortalandı */
 .footer-center {
     display: flex;
     gap: 80px;
     flex: 2;
-    justify-content: center; /* Sütunlar tam ortaya hizalandı */
+    justify-content: center; 
     min-width: 320px;
 }
 
 .footer-column {
     min-width: 140px;
-    text-align: center; /* Sütun içerikleri ortalandı */
+    text-align: center; 
 }
 
 .footer-column h3 {
@@ -443,11 +446,10 @@ body {
     text-shadow: 0 0 6px rgba(146, 56, 248, 0.7);
 }
 
-/* Footer Sağ Alanı - Biraz daha sağa kaydırıldı ve yeşil çubuğu silindi */
 .footer-right {
     flex: 1;
     min-width: 240px;
-    text-align: right; /* Metinler sağa yanaştırılarak sağa kayma etkisi artırıldı */
+    text-align: right; 
 }
 
 .footer-right-title {
@@ -455,7 +457,7 @@ body {
     font-size: 20px;
     font-weight: 900;
     color: #ffffff;
-    text-shadow: 0 0 10px #9238f8, 0 0 20px #9238f8; /* Mor neon efekti korundu */
+    text-shadow: 0 0 10px #9238f8, 0 0 20px #9238f8; 
     margin-bottom: 15px;
     display: inline-block;
     letter-spacing: 1.5px;
@@ -468,7 +470,6 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* responsive düzenlemeler */
 @media (max-width: 1024px) {
     .footer-container {
         flex-direction: column;
@@ -491,10 +492,66 @@ body {
     }
 }
 
-/* metnin durduğu kutunun ayarları */
+/* ESKİ HALİNE GETİRİLDİ: Orijinal Liderlik Tablosu Konumlandırması (Dikeyde tam merkez) */
+.static-score-container {
+    width: min(320px, 90vw); 
+    background-color: rgba(19, 28, 44, 0.7);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(146, 56, 248, 0.4);
+    border-radius: 16px;
+    padding: 15px 20px; 
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(146, 56, 248, 0.1);
+    z-index: 10;
+    
+    position: absolute;
+    left: 40px; 
+    top: calc(50% - 295px); /* İlk orijinal dikey hizaya tam olarak geri çekildi */
+    transform: translateY(-50%);
+    margin-bottom: 0; 
+}
+
+.static-score-container.right-side {
+    left: auto;
+    right: 40px;
+}
+
+.static-score-title {
+    margin: 0 0 10px 0; 
+    font-family: 'Courier New', Courier, monospace;
+    color: #ffffff;
+    font-size: 18px;
+    text-shadow: 0 0 8px #9238f8;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.static-score-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #f8fafc;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.static-score-table td {
+    padding: 8px 10px; 
+    text-align: left;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.static-score-table tr:last-child td {
+    border-bottom: none;
+}
+
+.static-rank-1 { color: #fbbf24; text-shadow: 0 0 6px #fbbf24; }
+.static-rank-2 { color: #94a3b8; text-shadow: 0 0 6px #94a3b8; }
+.static-rank-3 { color: #b45309; text-shadow: 0 0 6px #b45309; }
+
+/* DİĞER PROJE BİLEŞENLERİ */
 #target-text {
-    background-color: #1e293b;/* arka plandan biraz daha açık bir mavi */
-    color: #f8fafc;           /* kutunun içindeki yazının rengi */
+    background-color: #1e293b;
+    color: #f8fafc;           
     padding: 15px;
     border: 2px solid #043d55;
     width: min(620px, 90vw);
@@ -520,16 +577,9 @@ body {
     box-shadow: inset 0 -2px 0 #38bdf8;
 }
 
-.completed-word {
-    color: #4ade80;
-}
+.completed-word { color: #4ade80; }
+.missed-word { color: #f87171; background-color: rgba(248, 113, 113, 0.16); }
 
-.missed-word {
-    color: #f87171;
-    background-color: rgba(248, 113, 113, 0.16);
-}
-
-/* kullanıcının yazı yazacağı kutu */
 #user-input {
     background-color: #1e293b;
     color: #ffffff;
@@ -550,9 +600,7 @@ body {
     box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
 }
 
-#user-input::placeholder {
-    color: #94a3b8;
-}
+#user-input::placeholder { color: #94a3b8; }
 
 #stats {
     display: flex;
@@ -572,83 +620,7 @@ body {
     padding: 12px 16px;
 }
 
-.stat-box span {
-    display: block;
-    color: #94a3b8;
-    font-size: 13px;
-    margin-bottom: 6px;
-}
-
-.stat-box strong {
-    color: #f8fafc;
-    font-size: 24px;
-}
-
-/*yazının doğruluğuna göre renk değiştirme*/
-.correct {
-    color: #4ade80; 
-}
-
-/* yanlış yazılan kelimelerin arka planını hafif kırmızı yapar */   
-.incorrect {
-    color: #f87171; 
-    background-color: rgba(248, 113, 113, 0.2);
-    border-radius: 3px;
-}
-
-/* --- LIDERLIK TABLOSU AYARLARI --- */
-.static-score-container {
-    width: min(320px, 90vw); 
-    background-color: rgba(19, 28, 44, 0.7);
-    backdrop-filter: blur(8px);
-    border: 2px solid rgba(146, 56, 248, 0.4);
-    border-radius: 16px;
-    padding: 15px 20px; 
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(146, 56, 248, 0.1);
-    z-index: 10;
-    
-    position: absolute;
-    left: 40px; 
-    top: calc(50% - 280px);
-    transform: translateY(-50%);
-    margin-bottom: 0; 
-}
-
-/* Daily Score tablosu */
-.static-score-container.right-side {
-    left: auto;
-    right: 40px;
-}
-
-.static-score-title {
-    margin: 0 0 10px 0; 
-    font-family: 'Courier New', Courier, monospace;
-    color: #ffffff;
-    font-size: 18px;
-    text-shadow: 0 0 8px #9238f8;
-    letter-spacing: 2px;
-    text-align: center; /* Yazı ortaya hizalandı */
-}
-
-.static-score-table {
-    width: 100%;
-    border-collapse: collapse;
-    color: #f8fafc;
-    font-family: 'Courier New', Courier, monospace;
-}
-
-.static-score-table td {
-    padding: 8px 10px; /* Tablo hücreleri daraltılarak yükseklik azaltıldı */
-    text-align: left;
-    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
-    font-size: 15px;
-    font-weight: bold;
-}
-
-.static-score-table tr:last-child td {
-    border-bottom: none;
-}
-
-.static-rank-1 { color: #fbbf24; text-shadow: 0 0 6px #fbbf24; }
-.static-rank-2 { color: #94a3b8; text-shadow: 0 0 6px #94a3b8; }
-.static-rank-3 { color: #b45309; text-shadow: 0 0 6px #b45309; }
+.stat-box span { display: block; color: #94a3b8; font-size: 13px; margin-bottom: 6px; }
+.stat-box strong { color: #f8fafc; font-size: 24px; }
+.correct { color: #4ade80; }
+.incorrect { color: #f87171; background-color: rgba(248, 113, 113, 0.2); border-radius: 3px; }
