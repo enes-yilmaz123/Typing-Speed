@@ -193,19 +193,17 @@ body {
 
 #target-text {
     font-family: 'Courier New', Courier, monospace; 
-    text-align: center; /* Kelimeleri tam ortaya hizalar */
+    text-align: center; 
     background-color: #1e293b; 
     color: #f8fafc;            
     padding: 15px;
     border: 2px solid #043d55;
     
-    /* DEĞİŞEN VE EKLENEN KISIMLAR BURASI */
     width: min(1000px, 95vw); 
-    white-space: nowrap; /* Kelimelerin alt satıra inmesini kesinlikle yasaklar */
-    overflow: hidden;    /* Kutudan dışarı taşmasını engeller */
-    
+
+    white-space: normal;
     font-size: 20px;
-    line-height: 1.6;
+    line-height: 1.8; 
     border-radius: 8px;
 }
 

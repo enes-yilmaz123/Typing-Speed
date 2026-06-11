@@ -12,7 +12,7 @@
         <div class="settings-bar">
             <!-- 1. Menu (Language) -->
             <div class="dropdown-wrapper">
-                <span class="dropdown-label">Language</span>
+                <span class="dropdown-label" id="language-label">Language</span> <!-- ID Eklendi -->
                 <div class="dropdown">
                     <button class="dropbtn" id="lang-btn" onclick="toggleMenu('language-menu')">English ▾</button>
                     <div id="language-menu" class="dropdown-content">
@@ -21,15 +21,15 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- 2. Menu (Empty) -->
+            <!-- 2. menu zorluk  -->
             <div class="dropdown-wrapper">
-                <span class="dropdown-label">&nbsp;</span>
+                <span class="dropdown-label" id="difficulty-label">Difficulty</span>
                 <div class="dropdown">
-                    <button class="dropbtn" onclick="toggleMenu('menu-2')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-                    <div id="menu-2" class="dropdown-content">
-                        <a href="#">Setting 1</a>
-                        <a href="#">Setting 2</a>
+                    <button class="dropbtn" id="diff-btn" onclick="toggleMenu('difficulty-menu')">Normal ▾</button>
+                    <div id="difficulty-menu" class="dropdown-content">
+                        <a href="#" id="diff-normal" onclick="changeDifficulty('Normal')">Normal</a>
+                        <a href="#" id="diff-hard" onclick="changeDifficulty('Hard')">Hard</a>
+                        <a href="#" id="diff-extreme" onclick="changeDifficulty('Extreme')">Extreme</a>
                     </div>
                 </div>
             </div>
