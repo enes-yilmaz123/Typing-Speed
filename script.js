@@ -67,10 +67,15 @@ function initProfileLogic() {
 
     if (!profileTrigger || !profileModal) return;
 
-    profileTrigger.onclick = function() {
-        profileModal.classList.add("active");
-        if (usernameInput) usernameInput.focus();
-    };
+    // Yalnızca profil avatarına (daireye) tıklanınca aç/kapat mantığı
+    if (profileAvatar) {
+        profileAvatar.onclick = function() {
+            profileModal.classList.toggle("active");
+            if (profileModal.classList.contains("active") && usernameInput) {
+                usernameInput.focus();
+            }
+        };
+    }
 
     if (modalCancel) {
         modalCancel.onclick = function() {
@@ -92,8 +97,9 @@ function initProfileLogic() {
         };
     }
 
+    // Modal dışına tıklandığında pencereyi kapatma mantığı
     window.addEventListener("click", function(event) {
-        if (event.target === profileModal) {
+        if (!profileTrigger.contains(event.target)) {
             profileModal.classList.remove("active");
         }
     });
