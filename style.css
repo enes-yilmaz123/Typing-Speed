@@ -4,12 +4,8 @@ body {
     color: #ffffff;
     font-family: Arial, sans-serif;
     margin: 0;
-    overflow-x: hidden; /* Ekrandan taşan klavyenin yatay scroll bar (kaydırma çubuğu) oluşturmasını engeller */
+    overflow-x: hidden;
 }
-
-/* ========================================================= */
-/* --- SADECE INDEX.HTML (ANA MENÜ) İÇİN GEÇERLİ STİLLER --- */
-/* ========================================================= */
 
 .header-bar {
     position: absolute;
@@ -17,13 +13,13 @@ body {
     left: 0;
     width: 100%;
     background-color: #131c2c;
-    padding: 12px 40px; /* Sağ ve soldan 40px boşluk verildi */
+    padding: 12px 40px;/* Sağ ve soldan 40px boşluk verildi */
     box-sizing: border-box;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     z-index: 20;
-    display: flex; /* Başlık ve butonu yan yana hizalamak için */
-    justify-content: space-between; /* Başlık solda, buton sağda kalacak */
-    align-items: center; /* Dikeyde ortalama */
+    display: flex;/* Başlık ve butonu yan yana hizalamak için */
+    justify-content: space-between;
+    align-items: center;/* Dikeyde ortalama */
 }
 
 .game-title {
@@ -35,7 +31,7 @@ body {
     border-right: 5px solid #4ade80;
     white-space: nowrap;
     overflow: hidden;
-    margin: 0; /* Header-bar içindeki flex düzeni için margin sıfırlandı */
+    margin: 0;/* Header-bar içindeki flex düzeni için margin sıfırlandı */
     width: 12ch;
     animation: typing 1.5s steps(12, end), blink-caret 0.8s step-end infinite;
 }
@@ -57,55 +53,26 @@ body {
 .menu-description {
     font-size: 20px;
     color: #94a3b8; 
-    margin: 0 0 90px 0; /* Hem butonu hem tabloyu aradaki mesafeyi koruyarak aşağı itmek için 40px'den 90px'e çıkarıldı */
+    margin: 0 0 90px 0;
     letter-spacing: 1px;
     z-index: 10;
     position: relative;
 }
 
-/* --- BUTON TASARIMI (SAĞ ÜST İÇİN KÜÇÜLTÜLDÜ) --- */
-.button-link {
-    text-decoration: none;
-    z-index: 15; 
-    position: relative;
-}
-
-#menu-start-button {
-    padding: 10px 25px; /* Üst barda şık durması için boyutları küçültüldü */
-    background-color: #9238f8; 
-    color: #ffffff;
-    border: none;
-    font-size: 16px; /* Yazı boyutu küçültüldü */
-    font-weight: 900;
-    letter-spacing: 1.5px;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 4px 15px rgba(146, 56, 248, 0.4);
-    position: relative;
-}
-
-#menu-start-button:hover {
-    transform: translateY(-2px) scale(1.03); 
-    background-color: #a855f7; 
-    box-shadow: 0 8px 20px rgba(146, 56, 248, 0.6); 
-}
-
-#menu-start-button:active {
-    transform: translateY(-1px) scale(0.98);
-}
-
-/* --- EKRANDAN TAŞAN DEVASA SAYAM KLAVYE --- */
+/* ---  SAYDAM KLAVYE --- */
 .keyboard-decoration {
-    margin-top: -60px; /* Buton yukarı taşındığı için klavye menüde daha dengeli bir konuma çekildi */
+    margin-top: -60px;
     display: flex;
     flex-direction: column;
     gap: 25px; 
-    opacity: 0.15; 
-    pointer-events: none; 
     user-select: none; 
     z-index: 5; 
     position: relative;
+}
+
+.keyboard-decoration .key:not(.space-bar) {
+    pointer-events: none;
+    opacity: 0.15;
 }
 
 .key-row {
@@ -131,25 +98,52 @@ body {
     transition: all 0.3s ease;
 }
 
-/* ÇOK DAHA BELİRGİN QWERTY VURGUSU (Bir tık daha parlatıldı) */
+/* ÇOK DAHA BELİRGİN QWERTY VURGUSU */
 .highlight-qwerty {
     color: #4ade80; 
-    background-color: rgba(74, 222, 128, 0.3); /* Görünürlük için opaklık 0.15'ten 0.3'e çıkarıldı */
+    background-color: rgba(74, 222, 128, 0.3);
     border-color: #4ade80; 
     box-shadow: inset 0 0 40px rgba(74, 222, 128, 0.5), 0 0 35px rgba(74, 222, 128, 0.5); 
     text-shadow: 0 0 12px #4ade80, 0 0 30px #4ade80; 
+    opacity: 0.3 !important;
 }
 
-/* SPACE BAR (Bir tık daha belirgin yapıldı) */
+.space-button-link {
+    text-decoration: none;
+    z-index: 25;
+    position: relative;
+}
+
 .space-bar {
     width: 1260px; 
-    font-size: 80px; 
-    letter-spacing: 12px;
-    color: #9238f8; /* Yazı rengi klavye temasına uygun mor yapıldı */
-    background-color: rgba(146, 56, 248, 0.07); /* İç dolgusu bir tık artırıldı */
-    border-color: #9238f8; /* Çerçevesi belirginleştirildi */
-    box-shadow: inset 0 0 40px rgba(146, 56, 248, 0.4), 0 0 30px rgba(146, 56, 248, 0.1); /* Neon efekti güçlendirildi */
-    text-shadow: 0 0 15px rgba(146, 56, 248, 0.1);
+    font-size: 32px; 
+    font-weight: 900;
+    font-family: 'Courier New', Courier, monospace;
+    letter-spacing: 6px;
+    color: #9238f8;
+    background-color: rgba(146, 56, 248, 0.12);
+    border-color: #9238f8;
+    box-shadow: inset 0 0 40px rgba(146, 56, 248, 0.4), 0 10px 25px rgba(146, 56, 248, 0.2);
+    text-shadow: 0 0 10px rgba(146, 56, 248, 0.6);
+    cursor: pointer;
+    outline: none;
+    opacity: 0.85;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.space-bar:hover {
+    opacity: 1;
+    color: #ffffff;
+    background-color: rgba(146, 56, 248, 0.25);
+    border-color: #a855f7;
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: inset 0 0 50px rgba(146, 56, 248, 0.6), 0 15px 30px rgba(146, 56, 248, 0.4);
+    text-shadow: 0 0 15px #ffffff, 0 0 25px #9238f8;
+}
+
+.space-bar:active {
+    transform: translateY(-1px) scale(0.99);
+    box-shadow: inset 0 0 30px rgba(146, 56, 248, 0.7), 0 5px 10px rgba(0, 0, 0, 0.5);
 }
 
 /* --- ALT BİLGİ (FOOTER) ÇUBUĞU --- */
@@ -174,14 +168,10 @@ body {
     letter-spacing: 1.5px;
 }
 
-/* ======================================================== */
-/* --- SADECE GAME.HTML (OYUN EKRANI) İÇİN KALAN KISIM ---  */
-/* ======================================================== */
-
 /* metnin durduğu kutunun ayarları */
 #target-text {
-    background-color: #1e293b; /* arka plandan biraz daha açık bir mavi */
-    color: #f8fafc;            /* kutunun içindeki yazının rengi */
+    background-color: #1e293b;/* arka plandan biraz daha açık bir mavi */
+    color: #f8fafc;           /* kutunun içindeki yazının rengi */
     padding: 15px;
     border: 2px solid #043d55;
     width: min(620px, 90vw);
@@ -276,8 +266,10 @@ body {
     color: #4ade80; 
 }
 
+/* yanlış yazılan kelimelerin arka planını hafif kırmızı yapar */   
+    border-radius: 3px;
 .incorrect {
     color: #f87171; 
-    background-color: rgba(248, 113, 113, 0.2); /* yanlış yazılan kelimelerin arka planını hafif kırmızı yapar */   
+    background-color: rgba(248, 113, 113, 0.2);
     border-radius: 3px;
 }
