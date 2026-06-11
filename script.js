@@ -31,11 +31,11 @@ const uiTranslations = {
         "sound1": "Sound 1",
         "sound2": "Sound 2",
         "sound3": "Sound 3",
-        // YENİ ÇEVİRİLER
         "lastGameTitle": "Last Game",
         "lgCorrect": "Correct Letters",
         "lgWrong": "Wrong Letters",
-        "lgWrongWords": "Wrong Words"
+        "lgWrongWords": "Wrong Words",
+        "bestWpmLabel": "Best WPM " // YENİ
     },
     "Turkish": {
         "langLabel": "Dil",
@@ -58,11 +58,11 @@ const uiTranslations = {
         "sound1": "Klavye 1",
         "sound2": "Klavye 2",
         "sound3": "Klavye 3",
-        // YENİ ÇEVİRİLER
         "lastGameTitle": "Son Oyun",
         "lgCorrect": "Doğru Harfler",
         "lgWrong": "Yanlış Harfler",
-        "lgWrongWords": "Yanlış Kelimeler"
+        "lgWrongWords": "Yanlış Kelimeler",
+        "bestWpmLabel": "En İyi DKS " // YENİ
     }
 };
 
@@ -97,10 +97,11 @@ window.onload = function() {
     changeSound(savedSound);
     
     loadSoundsToRAM();
-    updateLastGameUI(); // Sayfa açılırken hafızadaki son oyunu yükle!
+    updateLastGameUI(); 
+    updateBestWpmUI(); // Sayfa açılırken rekoru da yükle
 };
 
-// --- SON OYUN İSTATİSTİKLERİNİ GETİRME ---
+// --- SON OYUN VE REKOR İSTATİSTİKLERİNİ GETİRME ---
 function updateLastGameUI() {
     let savedData = localStorage.getItem("lastGameStats");
     if (savedData) {
@@ -117,6 +118,12 @@ function updateLastGameUI() {
     }
 }
 
+function updateBestWpmUI() {
+    let savedBest = localStorage.getItem("bestWpm") || "0";
+    let bestWpmEl = document.getElementById("best-wpm-value");
+    if (bestWpmEl) bestWpmEl.innerText = savedBest;
+}
+
 function updateWordsList() {
     if (currentLang === "English") {
         if (currentDifficulty === "Normal") wordsList = wordsEnNormal;
@@ -129,8 +136,7 @@ function updateWordsList() {
     }
 }
 
-
-// --- KLAVYE SESİ ÜRETME ram buffer ile ---
+// --- KLAVYE SESİ ÜRETME (RAM BUFFER) ---
 let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 let decodedSounds = {
     "Sound 1": null,
@@ -179,8 +185,7 @@ function playKeystrokeSound() {
     }
 }
 
-
-// --- SES DEĞİŞTİRME İŞLEMİ ---
+// --- SES DEĞİŞTİRME ---
 function changeSound(soundType) {
     currentSound = soundType;
     localStorage.setItem("preferredSound", soundType);
@@ -199,7 +204,7 @@ function changeSound(soundType) {
     if (soundMenu) soundMenu.classList.remove("show-menu");
 }
 
-// --- FONT DEĞİŞTİRME İŞLEMİ ---
+// --- FONT DEĞİŞTİRME ---
 function changeFont(fontValue, fontName) {
     currentFont = fontValue;
     localStorage.setItem("preferredFont", fontValue);
@@ -218,7 +223,7 @@ function changeFont(fontValue, fontName) {
     if (userInput) userInput.style.fontFamily = fontValue;
 }
 
-// --- DİL DEĞİŞTİRME İŞLEMİ ---
+// --- DİL DEĞİŞTİRME ---
 function changeLanguage(selectedLang) {
     currentLang = selectedLang;
     localStorage.setItem("preferredLang", selectedLang);
@@ -243,11 +248,11 @@ function changeLanguage(selectedLang) {
         "snd-k1": t.sound1,
         "snd-k2": t.sound2,
         "snd-k3": t.sound3,
-        // Son Oyun kutusunun çevirileri
         "lg-title": t.lastGameTitle,
         "lg-correct-label": t.lgCorrect,
         "lg-wrong-label": t.lgWrong,
-        "lg-wrong-words-label": t.lgWrongWords
+        "lg-wrong-words-label": t.lgWrongWords,
+        "best-wpm-label": t.bestWpmLabel // YENİ ÇEVİRİ BAĞLANDI
     };
 
     for (let id in elementsToUpdate) {
@@ -291,7 +296,7 @@ function changeLanguage(selectedLang) {
     restartGame();
 }
 
-// --- ZORLUK DEĞİŞTİRME İŞLEMİ ---
+// --- ZORLUK DEĞİŞTİRME ---
 function changeDifficulty(diff) {
     currentDifficulty = diff;
     localStorage.setItem("preferredDiff", diff);
@@ -308,7 +313,7 @@ function changeDifficulty(diff) {
     restartGame();
 }
 
-// Menüleri açma/kapama fonksiyonu
+// MENÜLERİ AÇMA/KAPAMA
 function toggleMenu(menuId) {
     let dropdowns = document.getElementsByClassName("dropdown-content");
     for (let i = 0; i < dropdowns.length; i++) {
@@ -412,20 +417,30 @@ function startTimer() {
                 userInput.value = "";      
             }
 
-            // SÜRE BİTTİĞİNDE VERİLERİ HAFIZAYA VE KUTUYA KAYDET
-            let finalWpm = document.getElementById("wpm").innerText;
+            // SÜRE BİTTİĞİNDE VERİLERİ KAYDET
+            let finalWpmText = document.getElementById("wpm").innerText;
             let finalCorrect = document.getElementById("correct-letters").innerText;
             let finalWrong = document.getElementById("wrong-letters").innerText;
             let finalWrongWords = document.getElementById("wrong-words").innerText;
 
+            // Son oyunu kaydet
             let lastGameData = {
-                wpm: finalWpm,
+                wpm: finalWpmText,
                 correct: finalCorrect,
                 wrong: finalWrong,
                 wrongWords: finalWrongWords
             };
             localStorage.setItem("lastGameStats", JSON.stringify(lastGameData));
-            updateLastGameUI(); // Kutuyu anında güncelle
+            updateLastGameUI(); 
+
+            // REKOR KONTROLÜ (Yeni WPM eskisinden büyükse kaydet)
+            let finalWpmNum = parseInt(finalWpmText) || 0;
+            let currentBestNum = parseInt(localStorage.getItem("bestWpm")) || 0;
+
+            if (finalWpmNum > currentBestNum) {
+                localStorage.setItem("bestWpm", finalWpmNum);
+            }
+            updateBestWpmUI(); // Arayüzde rekoru hemen güncelle!
 
             let targetDiv = document.getElementById("target-text");
             if (targetDiv) {
@@ -551,6 +566,7 @@ function getCurrentWordSpan() {
     return document.querySelectorAll("#target-text .target-word")[currentWordIndex];
 }
 
+// WPM DÜNYA STANDARDI HESAPLAMASI
 function updateStats() {
     let userInput = document.getElementById("user-input");
     let wpmDisplay = document.getElementById("wpm");
@@ -561,10 +577,8 @@ function updateStats() {
     let currentStats = getCurrentLetterStats();
     let elapsedSeconds = 60 - timeLeft;
     
-    // Toplam doğru harf sayısını buluyoruz
     let totalChars = totalCorrectLetters + currentStats.correct;
     
-    // DÜNYA STANDARDI WPM HESAPLAMASI: (Doğru Harf / 5) / Dakika
     let wpm = elapsedSeconds > 0 ? Math.round((totalChars / 5) / (elapsedSeconds / 60)) : 0;
 
     if (wpmDisplay) wpmDisplay.innerText = wpm;
