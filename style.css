@@ -108,6 +108,156 @@ body {
     opacity: 0.3 !important;
 }
 
+/* profil butonu ve penceresi için eklenen alanlar */
+.profile-container {
+    position: relative; /* altındaki kutuyu hizalamak için relative yapıldı */
+    display: flex;
+    align-items: center;
+    z-index: 25;
+}
+
+.profile-circle {
+    width: 45px;
+    height: 45px;
+    background-color: rgba(146, 56, 248, 0.2);
+    border: 2px solid #9238f8;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(146, 56, 248, 0.4);
+    transition: all 0.3s ease;
+}
+
+.profile-circle:hover {
+    background-color: rgba(146, 56, 248, 0.4);
+    border-color: #4ade80;
+    box-shadow: 0 0 20px #4ade80;
+    transform: scale(1.05);
+}
+
+.profile-modal {
+    display: none;
+    position: absolute; 
+    top: 75px; /* kutu üst dikdörtgenden daha da aşağıya indirildi */
+    right: 0; 
+    z-index: 100;
+}
+
+.profile-modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: rgba(19, 28, 44, 0.75); /* arka plan yarı saydam yapıldı */
+    backdrop-filter: blur(8px); /* arkadaki klavyenin bulanık görünmesi için efekt eklendi */
+    border: 2px solid rgba(146, 56, 248, 0.7);
+    border-radius: 16px;
+    padding: 24px;
+    width: 300px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(146, 56, 248, 0.1);
+    text-align: left;
+    animation: modalSlide 0.2s ease-out;
+}
+
+@keyframes modalSlide {
+    from { transform: translateY(-10px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-content h3 {
+    margin: 0 0 16px 0;
+    font-family: 'Courier New', Courier, monospace;
+    color: #ffffff;
+    font-size: 18px;
+    text-shadow: 0 0 8px #9238f8;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.input-group label {
+    color: #94a3b8;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.input-group input {
+    background-color: rgba(30, 41, 59, 0.7); /* input alanı da uyum için hafif saydam yapıldı */
+    color: #ffffff;
+    border: 2px solid #334155;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+    border-color: #4ade80;
+    box-shadow: 0 0 10px rgba(74, 222, 128, 0.2);
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+/* butonlar arka plandaki klavye tuslarinin stiline uyarlandi */
+.modal-btn {
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: rgba(30, 41, 59, 0.6); 
+    border: 2px solid rgba(146, 56, 248, 0.5); 
+    box-shadow: inset 0 0 15px rgba(146, 56, 248, 0.15), 0 4px 10px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease;
+}
+
+.modal-btn.cancel {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.modal-btn.cancel:hover {
+    color: #ffffff;
+    background-color: rgba(30, 41, 59, 0.8);
+    border-color: #f87171;
+    box-shadow: inset 0 0 15px rgba(248, 113, 113, 0.2), 0 0 15px rgba(248, 113, 113, 0.4);
+    transform: translateY(-2px);
+}
+
+.modal-btn.save {
+    color: #9238f8;
+    text-shadow: 0 0 5px rgba(146, 56, 248, 0.6);
+}
+
+.modal-btn.save:hover {
+    color: #ffffff;
+    background-color: rgba(146, 56, 248, 0.2);
+    border-color: #4ade80;
+    box-shadow: inset 0 0 20px rgba(74, 222, 128, 0.3), 0 0 15px #4ade80;
+    text-shadow: 0 0 8px #4ade80;
+    transform: translateY(-2px);
+}
+
+.modal-btn:active {
+    transform: translateY(0);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
 .space-button-link {
     text-decoration: none;
     z-index: 25;
@@ -267,7 +417,6 @@ body {
 }
 
 /* yanlış yazılan kelimelerin arka planını hafif kırmızı yapar */   
-    border-radius: 3px;
 .incorrect {
     color: #f87171; 
     background-color: rgba(248, 113, 113, 0.2);

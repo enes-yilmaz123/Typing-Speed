@@ -9,6 +9,23 @@
     
     <div class="header-bar">
         <h1 class="game-title">TYPING SPEED</h1>
+        <div class="profile-container" id="profile-trigger">
+            <div class="profile-circle" id="profile-avatar">G</div>
+        </div>
+    </div>
+
+    <div class="profile-modal" id="profile-modal">
+        <div class="modal-content">
+            <h3>Edit Profile</h3>
+            <div class="input-group">
+                <label for="username-input">Your Name</label>
+                <input type="text" id="username-input" maxlength="15" placeholder="Enter your name">
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" id="modal-cancel">Cancel</button>
+                <button class="modal-btn save" id="modal-save">Save</button>
+            </div>
+        </div>
     </div>
 
     <main class="menu-container">
@@ -45,5 +62,6 @@
         <p>© 2026 Typing Speed Game. Ready to type.</p>
     </div>
 
+    <script src="script.js"></script>
 </body>
 </html>

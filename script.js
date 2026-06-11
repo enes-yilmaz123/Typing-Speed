@@ -49,7 +49,55 @@ function generateRandomWords() {
 window.onload = function() {
     generateRandomWords();
     prepareTest();
+    initProfileLogic();
 };
+
+// kullanici adini yerel hafizada saklayan ve degistiren fonksiyon
+function initProfileLogic() {
+    const profileTrigger = document.getElementById("profile-trigger");
+    const profileModal = document.getElementById("profile-modal");
+    const modalCancel = document.getElementById("modal-cancel");
+    const modalSave = document.getElementById("modal-save");
+    const usernameInput = document.getElementById("username-input");
+    const profileAvatar = document.getElementById("profile-avatar");
+
+    let savedName = localStorage.getItem("gameUsername") || "Gamer";
+    if (profileAvatar) profileAvatar.textContent = savedName.charAt(0).toUpperCase();
+    if (usernameInput) usernameInput.value = savedName;
+
+    if (!profileTrigger || !profileModal) return;
+
+    profileTrigger.onclick = function() {
+        profileModal.classList.add("active");
+        if (usernameInput) usernameInput.focus();
+    };
+
+    if (modalCancel) {
+        modalCancel.onclick = function() {
+            profileModal.classList.remove("active");
+            let reloadedName = localStorage.getItem("gameUsername") || "Gamer";
+            if (usernameInput) usernameInput.value = reloadedName;
+        };
+    }
+
+    if (modalSave) {
+        modalSave.onclick = function() {
+            let newName = usernameInput.value.trim();
+            if (newName === "") {
+                newName = "Gamer";
+            }
+            localStorage.setItem("gameUsername", newName);
+            if (profileAvatar) profileAvatar.textContent = newName.charAt(0).toUpperCase();
+            profileModal.classList.remove("active");
+        };
+    }
+
+    window.addEventListener("click", function(event) {
+        if (event.target === profileModal) {
+            profileModal.classList.remove("active");
+        }
+    });
+}
 
 function prepareTest() {
     let timeDisplay = document.getElementById("time");
@@ -74,7 +122,6 @@ function prepareTest() {
         userInput.disabled = false;
         userInput.oninput = handleTyping;
         userInput.onkeydown = handleKeyDown;
-        userInput.focus();
     }
 
     updateStats();
@@ -171,7 +218,6 @@ function submitCurrentWord() {
         }
         if (currentSpan) currentSpan.classList.add("missed-word");
         
-        // Yanlış kelime atlandığında harfleri kasaya kaydetme eklentisi
         let currentStats = getCurrentLetterStats();
         totalWrongLetters += currentStats.wrong;
     }
@@ -243,7 +289,6 @@ function updateStats() {
 
     if (wpmDisplay) wpmDisplay.innerText = wpm;
     if (correctLettersDisplay) correctLettersDisplay.innerText = totalCorrectLetters + currentStats.correct;
-    // Yanlış harflerin toplamını ekrana yazdırma eklentisi
     if (wrongLettersDisplay) wrongLettersDisplay.innerText = totalWrongLetters + currentStats.wrong;
     if (wrongWordsDisplay) wrongWordsDisplay.innerText = totalWrongWords;
 }
