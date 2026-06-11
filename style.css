@@ -480,3 +480,77 @@ body {
     letter-spacing: 1.5px;
     text-shadow: 0 0 8px rgba(56, 189, 248, 0.4); /* Hafif mavi parlama efekti */
 }
+/* --- SAĞ TARAF (SON OYUN) BİLGİ KUTUSU --- */
+.side-panel {
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #1e293b;
+    border: 2px solid #043d55;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 160px;
+    text-align: center;
+    z-index: 50;
+    transition: all 0.3s ease;
+}
+
+.side-panel h3 {
+    color: #38bdf8;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+    border-bottom: 1px solid #334155;
+    padding-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.side-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.side-stat span {
+    color: #94a3b8;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.side-stat strong {
+    color: #f8fafc;
+    font-size: 24px;
+}
+
+/* Sağ kutudaki WPM kısmını biraz daha öne çıkaralım */
+#lg-wpm {
+    color: #4ade80;
+    font-size: 28px;
+    text-shadow: 0 0 10px rgba(74, 222, 128, 0.4);
+}
+
+/* Ekran küçülürse kutuyu aşağı alarak ortadaki yazıları sıkıştırmasını engeller */
+@media (max-width: 1350px) {
+    .side-panel {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: min(620px, 90vw);
+        margin: 20px auto;
+    }
+    .side-panel h3 {
+        width: 100%;
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+}

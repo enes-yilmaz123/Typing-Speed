@@ -30,7 +30,12 @@ const uiTranslations = {
         "soundOff": "Off",
         "sound1": "Sound 1",
         "sound2": "Sound 2",
-        "sound3": "Sound 3"
+        "sound3": "Sound 3",
+        // YENİ ÇEVİRİLER
+        "lastGameTitle": "Last Game",
+        "lgCorrect": "Correct Letters",
+        "lgWrong": "Wrong Letters",
+        "lgWrongWords": "Wrong Words"
     },
     "Turkish": {
         "langLabel": "Dil",
@@ -52,7 +57,12 @@ const uiTranslations = {
         "soundOff": "Kapalı",
         "sound1": "Klavye 1",
         "sound2": "Klavye 2",
-        "sound3": "Klavye 3"
+        "sound3": "Klavye 3",
+        // YENİ ÇEVİRİLER
+        "lastGameTitle": "Son Oyun",
+        "lgCorrect": "Doğru Harfler",
+        "lgWrong": "Yanlış Harfler",
+        "lgWrongWords": "Yanlış Kelimeler"
     }
 };
 
@@ -86,9 +96,26 @@ window.onload = function() {
     changeFont(savedFont, savedFontName);
     changeSound(savedSound);
     
-    // Gecikmesiz ses için dosyaları sayfa açıldığında RAM'e yükle!
     loadSoundsToRAM();
+    updateLastGameUI(); // Sayfa açılırken hafızadaki son oyunu yükle!
 };
+
+// --- SON OYUN İSTATİSTİKLERİNİ GETİRME ---
+function updateLastGameUI() {
+    let savedData = localStorage.getItem("lastGameStats");
+    if (savedData) {
+        let stats = JSON.parse(savedData);
+        let lgWpm = document.getElementById("lg-wpm");
+        let lgCorrect = document.getElementById("lg-correct");
+        let lgWrong = document.getElementById("lg-wrong");
+        let lgWrongWords = document.getElementById("lg-wrong-words");
+
+        if(lgWpm) lgWpm.innerText = stats.wpm;
+        if(lgCorrect) lgCorrect.innerText = stats.correct;
+        if(lgWrong) lgWrong.innerText = stats.wrong;
+        if(lgWrongWords) lgWrongWords.innerText = stats.wrongWords;
+    }
+}
 
 function updateWordsList() {
     if (currentLang === "English") {
@@ -111,7 +138,6 @@ let decodedSounds = {
     "Sound 3": null
 };
 
-// Sesleri diskten okuyup anında çalabilmek için şifresini çözer
 async function loadSoundsToRAM() {
     const soundFiles = {
         "Sound 1": "klavye1.wav",
@@ -134,14 +160,12 @@ async function loadSoundsToRAM() {
 function playKeystrokeSound() {
     if (currentSound === "Off") return;
 
-    // Tarayıcı politikası gereği sayfa ilk yüklendiğinde ses motoru uyur, tuşa basılınca uyandırırız
     if (audioCtx.state === 'suspended') {
         audioCtx.resume();
     }
 
     const buffer = decodedSounds[currentSound];
     
-    // Eğer ses RAM'e yüklendiyse anında çal
     if (buffer) {
         const source = audioCtx.createBufferSource();
         source.buffer = buffer;
@@ -151,7 +175,7 @@ function playKeystrokeSound() {
         
         source.connect(gainNode);
         gainNode.connect(audioCtx.destination);
-        source.start(0); // 0 Milisaniye gecikmeyle çal!
+        source.start(0); 
     }
 }
 
@@ -218,7 +242,12 @@ function changeLanguage(selectedLang) {
         "snd-off": t.soundOff,
         "snd-k1": t.sound1,
         "snd-k2": t.sound2,
-        "snd-k3": t.sound3
+        "snd-k3": t.sound3,
+        // Son Oyun kutusunun çevirileri
+        "lg-title": t.lastGameTitle,
+        "lg-correct-label": t.lgCorrect,
+        "lg-wrong-label": t.lgWrong,
+        "lg-wrong-words-label": t.lgWrongWords
     };
 
     for (let id in elementsToUpdate) {
@@ -268,7 +297,7 @@ function changeDifficulty(diff) {
     localStorage.setItem("preferredDiff", diff);
 
     let t = uiTranslations[currentLang];
-    let diffText = diff === "Normal" ? t.diffNormal : (diff === "Hard" ? t.diffHard : t.diffExtreme);
+    let diffText = diff === "Normal" ? t.diffNormal : (currentDifficulty === "Hard" ? t.diffHard : t.diffExtreme);
     let diffBtn = document.getElementById("diff-btn");
     if (diffBtn) diffBtn.innerHTML = diffText + " ▾";
 
@@ -382,6 +411,21 @@ function startTimer() {
                 userInput.disabled = true; 
                 userInput.value = "";      
             }
+
+            // SÜRE BİTTİĞİNDE VERİLERİ HAFIZAYA VE KUTUYA KAYDET
+            let finalWpm = document.getElementById("wpm").innerText;
+            let finalCorrect = document.getElementById("correct-letters").innerText;
+            let finalWrong = document.getElementById("wrong-letters").innerText;
+            let finalWrongWords = document.getElementById("wrong-words").innerText;
+
+            let lastGameData = {
+                wpm: finalWpm,
+                correct: finalCorrect,
+                wrong: finalWrong,
+                wrongWords: finalWrongWords
+            };
+            localStorage.setItem("lastGameStats", JSON.stringify(lastGameData));
+            updateLastGameUI(); // Kutuyu anında güncelle
 
             let targetDiv = document.getElementById("target-text");
             if (targetDiv) {
