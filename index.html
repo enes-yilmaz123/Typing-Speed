@@ -9,14 +9,85 @@
     
     <div class="header-bar">
         <h1 class="game-title">TYPING SPEED</h1>
+        <div class="header-actions">
+            <button class="login-btn" id="login-button">LOG IN</button>
+            <div class="profile-container" id="profile-trigger">
+                <div class="profile-circle" id="profile-avatar">G</div>
+                
+                <div class="profile-modal" id="profile-modal">
+                    <div class="modal-content">
+                        <h3>Edit Profile</h3>
+                        <div class="input-group">
+                            <label for="username-input">Your Name</label>
+                            <input type="text" id="username-input" maxlength="15" placeholder="Enter your name">
+                        </div>
+                        <div class="modal-footer-buttons">
+                            <div class="modal-buttons">
+                                <button class="modal-btn cancel" id="modal-cancel">Cancel</button>
+                                <button class="modal-btn save" id="modal-save">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 
     <main class="menu-container">
         <p class="menu-description">Test your typing speed and improve your keyboard skills.</p>
-        
-        <a href="game.html" class="button-link">
-            <button id="menu-start-button">START GAME</button>
-        </a>
+
+        <div class="action-container-absolute">
+            <a href="game.html" class="start-game-link">
+                <button class="neon-start-btn">START GAME</button>
+            </a>
+        </div>
+
+        <div class="static-score-container">
+            <h2 class="static-score-title">HIGHSCORES</h2>
+            <table class="static-score-table">
+                <tbody id="main-leaderboard-body">
+                    <tr>
+                        <td class="static-rank-1">#1</td>
+                        <td>GamerX</td>
+                        <td class="correct">95 WPM</td>
+                    </tr>
+                    <tr>
+                        <td class="static-rank-2">#2</td>
+                        <td>TypeMaster</td>
+                        <td class="correct">88 WPM</td>
+                    </tr>
+                    <tr>
+                        <td class="static-rank-3">#3</td>
+                        <td>Speedy</td>
+                        <td class="correct">74 WPM</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="static-score-container right-side">
+            <h2 class="static-score-title">DAILY SCORE</h2>
+            <table class="static-score-table">
+                <tbody id="daily-leaderboard-body">
+                    <tr>
+                        <td class="static-rank-1">#1</td>
+                        <td>FastFingers</td>
+                        <td class="correct">92 WPM</td>
+                    </tr>
+                    <tr>
+                        <td class="static-rank-2">#2</td>
+                        <td>NinjaTyper</td>
+                        <td class="correct">85 WPM</td>
+                    </tr>
+                    <tr>
+                        <td class="static-rank-3">#3</td>
+                        <td>QuickCat</td>
+                        <td class="correct">70 WPM</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <div class="keyboard-decoration">
             <div class="key-row">
@@ -38,14 +109,47 @@
                 <div class="key">V</div><div class="key">B</div><div class="key">N</div><div class="key">M</div>
             </div>
             <div class="key-row">
-                <div class="key space-bar"></div>
+                <div class="key space-bar" id="menu-start-button"></div>
             </div>
         </div>
     </main>
 
-    <div class="footer-bar">
-        <p>© 2026 Typing Speed Game. Ready to type.</p>
-    </div>
+    <footer class="game-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <div class="footer-logo">TS</div>
+                <p class="footer-tagline">Test your typing speed</p>
+                <p class="footer-copyright">&copy; 2026 Typing Speed</p>
+            </div>
+            <div class="footer-center">
+                <div class="footer-column">
+                    <h3>Game</h3>
+                    <ul>
+                        <li><a href="game.html">Typing Test</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="mailto:mashumkacmaz072@gmail.com">Mahsum Kaçmaz</a></li>
+                        <li><a href="mailto:yenes991@gmail.com">Enes Yılmaz</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Link</h3>
+                    <ul>
+                        <li><a href="https://github.com/enes-yilmaz123/Typing-Speed.git" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-right">
+                <div class="footer-right-title">DEVELOPERS</div>
+                <p>Mahsum Kaçmaz - 240229077</p>
+                <p>Enes Yılmaz - 240229086</p>
+            </div>
+        </div>
+    </footer>
 
+    <script src="script.js"></script>
 </body>
 </html>
