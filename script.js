@@ -1,14 +1,11 @@
 // --- DİL SEÇENEKLERİ, ÇEVİRİLER VE KELİME HAVUZLARI ---
 
-// 1. Normal Zorluk (Kısa ve standart kelimeler)
 const wordsEnNormal = ["apple", "computer", "code", "student", "keyboard", "mouse", "screen", "project", "window", "game", "speed", "test", "coffee", "network", "system", "book", "chair", "desk", "egg", "fish"];
 const wordsTrNormal = ["elma", "bilgisayar", "kod", "öğrenci", "klavye", "fare", "ekran", "proje", "pencere", "oyun", "hız", "test", "kahve", "ağ", "sistem", "kitap", "sandalye", "masa", "yumurta", "balık"];
 
-// 2. Zor (Hard) (Uzun kelimeler)
 const wordsEnHard = ["experience", "government", "understand", "difference", "management", "technology", "information", "university", "particular", "development", "population", "production", "performance", "environment", "traditional"];
 const wordsTrHard = ["araştırmacı", "sürdürülebilir", "gerçekleştirme", "değerlendirme", "koordinasyon", "kütüphane", "laboratuvar", "uluslararası", "mühendislik", "üniversite", "organizasyon", "sorumluluk", "memnuniyet", "bağımsızlık", "vazgeçilmez"];
 
-// 3. Ekstrem (Extreme) (Büyük harf, noktalama ve sayılar)
 const wordsEnExtreme = ["Hello!", "It's", "Wait,", "U.S.A.", "Wi-Fi", "100%", "O'clock", "Code;", "A.I.", "Yes/No", "X-Ray", "Top-tier", "#1", "$100", "Why?", "C++", "T-Shirt", "Don't", "Stop.", "Well-done"];
 const wordsTrExtreme = ["Merhaba!", "Türkiye'de", "Bekle,", "A.B.D.", "Wi-Fi", "%100", "Saat'te", "Kod;", "Yapay-Zeka", "Evet/Hayır", "Röntgen", "Üst-düzey", "#1", "100₺", "Neden?", "C++", "T-Shirt", "Yapma!", "Dur.", "E-Posta"];
 
@@ -28,7 +25,12 @@ const uiTranslations = {
         "diffNormal": "Normal",
         "diffHard": "Hard",
         "diffExtreme": "Extreme",
-        "fontLabel": "Font" 
+        "fontLabel": "Font",
+        "soundLabel": "Sound",
+        "soundOff": "Off",
+        "sound1": "Sound 1",
+        "sound2": "Sound 2",
+        "sound3": "Sound 3"
     },
     "Turkish": {
         "langLabel": "Dil",
@@ -45,16 +47,21 @@ const uiTranslations = {
         "diffNormal": "Normal",
         "diffHard": "Zor",
         "diffExtreme": "Ekstrem",
-        "fontLabel": "Yazı Tipi" 
+        "fontLabel": "Yazı Tipi",
+        "soundLabel": "Klavye Sesi",
+        "soundOff": "Kapalı",
+        "sound1": "Klavye 1",
+        "sound2": "Klavye 2",
+        "sound3": "Klavye 3"
     }
 };
 
 let currentLang = "English";
 let currentDifficulty = "Normal";
 let currentFont = "Courier New, monospace";
+let currentSound = "Off"; 
 let wordsList = wordsEnNormal;
 
-// Zaman olcumu icin degiskenler
 let timeLeft = 60;
 let timerInterval;
 let isTestRunning = false;
@@ -67,19 +74,22 @@ let totalWrongWords = 0;
 let totalWrongLetters = 0;
 let lastWrongAttempt = "";
 
-// Sayfa yüklendiğinde çalışacak kısım
 window.onload = function() {
     let savedLang = localStorage.getItem("preferredLang") || "English";
     let savedDiff = localStorage.getItem("preferredDiff") || "Normal";
     let savedFont = localStorage.getItem("preferredFont") || "Courier New, monospace";
     let savedFontName = localStorage.getItem("preferredFontName") || "Courier";
+    let savedSound = localStorage.getItem("preferredSound") || "Off";
     
     changeLanguage(savedLang);
     changeDifficulty(savedDiff);
-    changeFont(savedFont, savedFontName); 
+    changeFont(savedFont, savedFontName);
+    changeSound(savedSound);
+    
+    // Gecikmesiz ses için dosyaları sayfa açıldığında RAM'e yükle!
+    loadSoundsToRAM();
 };
 
-// Aktif dil ve zorluk derecesine göre kelime havuzunu güncelleyen fonksiyon
 function updateWordsList() {
     if (currentLang === "English") {
         if (currentDifficulty === "Normal") wordsList = wordsEnNormal;
@@ -92,23 +102,91 @@ function updateWordsList() {
     }
 }
 
-// --- FONT DEĞİŞTİRME İŞLEMİ  ---
+
+// --- KLAVYE SESİ ÜRETME ram buffer ile ---
+let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let decodedSounds = {
+    "Sound 1": null,
+    "Sound 2": null,
+    "Sound 3": null
+};
+
+// Sesleri diskten okuyup anında çalabilmek için şifresini çözer
+async function loadSoundsToRAM() {
+    const soundFiles = {
+        "Sound 1": "klavye1.wav",
+        "Sound 2": "klavye2.wav",
+        "Sound 3": "klavye3.wav"
+    };
+
+    for (const [key, url] of Object.entries(soundFiles)) {
+        try {
+            const response = await fetch(url);
+            const arrayBuffer = await response.arrayBuffer();
+            const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+            decodedSounds[key] = audioBuffer;
+        } catch (err) {
+            console.warn(url + " yüklenirken bir hata oluştu:", err);
+        }
+    }
+}
+
+function playKeystrokeSound() {
+    if (currentSound === "Off") return;
+
+    // Tarayıcı politikası gereği sayfa ilk yüklendiğinde ses motoru uyur, tuşa basılınca uyandırırız
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+
+    const buffer = decodedSounds[currentSound];
+    
+    // Eğer ses RAM'e yüklendiyse anında çal
+    if (buffer) {
+        const source = audioCtx.createBufferSource();
+        source.buffer = buffer;
+        
+        const gainNode = audioCtx.createGain();
+        gainNode.gain.value = 0.4; 
+        
+        source.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        source.start(0); // 0 Milisaniye gecikmeyle çal!
+    }
+}
+
+
+// --- SES DEĞİŞTİRME İŞLEMİ ---
+function changeSound(soundType) {
+    currentSound = soundType;
+    localStorage.setItem("preferredSound", soundType);
+
+    let t = uiTranslations[currentLang];
+    let soundText = t.soundOff;
+    
+    if (currentSound === "Sound 1") soundText = t.sound1;
+    else if (currentSound === "Sound 2") soundText = t.sound2;
+    else if (currentSound === "Sound 3") soundText = t.sound3;
+
+    let soundBtn = document.getElementById("sound-btn");
+    if (soundBtn) soundBtn.innerHTML = soundText + " ▾";
+
+    let soundMenu = document.getElementById("sound-menu");
+    if (soundMenu) soundMenu.classList.remove("show-menu");
+}
+
+// --- FONT DEĞİŞTİRME İŞLEMİ ---
 function changeFont(fontValue, fontName) {
     currentFont = fontValue;
-    
-    // Hafızaya kaydet
     localStorage.setItem("preferredFont", fontValue);
     localStorage.setItem("preferredFontName", fontName);
 
-    // Butonun içindeki yazıyı güncelle
     let fontBtn = document.getElementById("font-btn");
     if (fontBtn) fontBtn.innerHTML = fontName + " ▾";
 
-    // Menüyü kapat
     let fontMenu = document.getElementById("font-menu");
     if(fontMenu) fontMenu.classList.remove("show-menu");
 
-    // Sadece hedef metin kutusunu ve kullanıcının yazı yazdığı kutuyu değiştir
     let targetText = document.getElementById("target-text");
     let userInput = document.getElementById("user-input");
     
@@ -129,16 +207,36 @@ function changeLanguage(selectedLang) {
 
     let t = uiTranslations[selectedLang];
     
-    let langLabelSpan = document.getElementById("language-label");
-    if(langLabelSpan) langLabelSpan.innerText = t.langLabel; 
+    let elementsToUpdate = {
+        "language-label": t.langLabel,
+        "font-label": t.fontLabel,
+        "sound-label": t.soundLabel,
+        "difficulty-label": t.difficultyLabel,
+        "diff-normal": t.diffNormal,
+        "diff-hard": t.diffHard,
+        "diff-extreme": t.diffExtreme,
+        "snd-off": t.soundOff,
+        "snd-k1": t.sound1,
+        "snd-k2": t.sound2,
+        "snd-k3": t.sound3
+    };
+
+    for (let id in elementsToUpdate) {
+        let el = document.getElementById(id);
+        if (el) el.innerText = elementsToUpdate[id];
+    }
     
-    let fontLabelSpan = document.getElementById("font-label");
-    if(fontLabelSpan) fontLabelSpan.innerText = t.fontLabel; // FONT MENÜSÜ ÇEVİRİSİ
+    let titleEl = document.querySelector(".game-title-text");
+    if (titleEl) titleEl.innerText = t.title;
     
-    document.querySelector(".game-title-text").innerText = t.title;
-    document.querySelector(".game-subtitle-text").innerText = t.subtitle;
-    document.getElementById("user-input").placeholder = t.placeholder;
-    document.querySelector(".timer-label").innerText = t.timeLeft;
+    let subtitleEl = document.querySelector(".game-subtitle-text");
+    if (subtitleEl) subtitleEl.innerText = t.subtitle;
+    
+    let inputEl = document.getElementById("user-input");
+    if (inputEl) inputEl.placeholder = t.placeholder;
+    
+    let timerEl = document.querySelector(".timer-label");
+    if (timerEl) timerEl.innerText = t.timeLeft;
     
     let statBoxes = document.querySelectorAll(".stat-box span");
     if(statBoxes.length >= 4) {
@@ -148,13 +246,17 @@ function changeLanguage(selectedLang) {
         statBoxes[3].innerText = t.wrongWords;
     }
 
-    document.getElementById("difficulty-label").innerText = t.difficultyLabel;
-    document.getElementById("diff-normal").innerText = t.diffNormal;
-    document.getElementById("diff-hard").innerText = t.diffHard;
-    document.getElementById("diff-extreme").innerText = t.diffExtreme;
-
     let diffText = currentDifficulty === "Normal" ? t.diffNormal : (currentDifficulty === "Hard" ? t.diffHard : t.diffExtreme);
-    document.getElementById("diff-btn").innerHTML = diffText + " ▾";
+    let diffBtn = document.getElementById("diff-btn");
+    if (diffBtn) diffBtn.innerHTML = diffText + " ▾";
+
+    let soundText = t.soundOff;
+    if (currentSound === "Sound 1") soundText = t.sound1;
+    else if (currentSound === "Sound 2") soundText = t.sound2;
+    else if (currentSound === "Sound 3") soundText = t.sound3;
+    
+    let soundBtn = document.getElementById("sound-btn");
+    if (soundBtn) soundBtn.innerHTML = soundText + " ▾";
 
     updateWordsList();
     restartGame();
@@ -166,7 +268,6 @@ function changeDifficulty(diff) {
     localStorage.setItem("preferredDiff", diff);
 
     let t = uiTranslations[currentLang];
-    
     let diffText = diff === "Normal" ? t.diffNormal : (diff === "Hard" ? t.diffHard : t.diffExtreme);
     let diffBtn = document.getElementById("diff-btn");
     if (diffBtn) diffBtn.innerHTML = diffText + " ▾";
@@ -202,7 +303,6 @@ window.onclick = function(event) {
     }
 }
 
-// Listeden rastgele kelime secip html div icine ekleyen fonksiyon
 function generateRandomWords() {
     let targetDiv = document.getElementById("target-text");
     if (!targetDiv) return;
@@ -226,10 +326,8 @@ function generateRandomWords() {
             charSpan.textContent = currentTargetWords[i][j];
             wordSpan.appendChild(charSpan);
         }
-
         targetDiv.appendChild(wordSpan);
     }
-
     updateTargetWordStyles();
 }
 
@@ -258,16 +356,13 @@ function prepareTest() {
         userInput.onkeydown = handleKeyDown;
         userInput.focus();
     }
-
     updateStats();
 }
 
 function startTimer() {
-    if (isTestRunning) {
-        return;
-    }
-
+    if (isTestRunning) return;
     isTestRunning = true;
+
     let timeDisplay = document.getElementById("time");
     let userInput = document.getElementById("user-input");
 
@@ -275,7 +370,6 @@ function startTimer() {
 
     timerInterval = setInterval(function() {
         timeLeft--;
-
         if (timeDisplay) timeDisplay.innerText = timeLeft;
         updateStats();
 
@@ -295,7 +389,6 @@ function startTimer() {
                 let restartText = uiTranslations[currentLang].restart;
                 targetDiv.innerHTML = `<button class="restart-button" onclick="restartGame()">${restartText}</button>`; 
             }
-
         }
     }, 1000);
 }
@@ -321,6 +414,11 @@ function handleTyping() {
 }
 
 function handleKeyDown(event) {
+    const ignoredKeys = ["Shift", "Control", "Alt", "Meta", "CapsLock", "Tab", "Escape"];
+    if (ignoredKeys.indexOf(event.key) === -1) {
+        playKeystrokeSound();
+    }
+
     if (event.key !== " " && event.key !== "Enter") {
         return;
     }
@@ -338,9 +436,7 @@ function submitCurrentWord() {
         return;
     }
 
-    if (!isTestRunning) {
-        startTimer();
-    }
+    if (!isTestRunning) startTimer();
 
     let currentWord = currentTargetWords[currentWordIndex];
     let currentSpan = getCurrentWordSpan();
@@ -369,13 +465,13 @@ function submitCurrentWord() {
     } else {
         updateTargetWordStyles();
     }
-
     updateStats();
 }
 
 function updateCurrentWordFeedback() {
     let userInput = document.getElementById("user-input");
     let currentSpan = getCurrentWordSpan();
+    
     if (!userInput || !currentSpan) return;
 
     let typedWord = userInput.value;
@@ -386,9 +482,7 @@ function updateCurrentWordFeedback() {
         charSpans[i].classList.remove("correct", "incorrect");
     }
 
-    if (typedWord === "") {
-        return;
-    }
+    if (typedWord === "") return;
 
     for (let i = 0; i < typedWord.length && i < charSpans.length; i++) {
         if (typedWord[i] === currentWord[i]) {
@@ -401,7 +495,6 @@ function updateCurrentWordFeedback() {
 
 function updateTargetWordStyles() {
     let wordSpans = document.querySelectorAll("#target-text .target-word");
-
     for (let i = 0; i < wordSpans.length; i++) {
         wordSpans[i].classList.remove("current-word");
         if (i === currentWordIndex) {

@@ -8,11 +8,9 @@
 <body>
     <main class="game-container">
         
-        <!-- Settings Menu Start -->
         <div class="settings-bar">
-            <!-- 1. Menu (Language) -->
             <div class="dropdown-wrapper">
-                <span class="dropdown-label" id="language-label">Language</span> <!-- ID Eklendi -->
+                <span class="dropdown-label" id="language-label">Language</span>
                 <div class="dropdown">
                     <button class="dropbtn" id="lang-btn" onclick="toggleMenu('language-menu')">English ▾</button>
                     <div id="language-menu" class="dropdown-content">
@@ -21,7 +19,7 @@
                     </div>
                 </div>
             </div>
-            <!-- 2. menu zorluk  -->
+            
             <div class="dropdown-wrapper">
                 <span class="dropdown-label" id="difficulty-label">Difficulty</span>
                 <div class="dropdown">
@@ -33,7 +31,7 @@
                     </div>
                 </div>
             </div>
-            <!-- 3. menu font  -->
+            
             <div class="dropdown-wrapper">
                 <span class="dropdown-label" id="font-label">Font</span>
                 <div class="dropdown">
@@ -47,20 +45,19 @@
                 </div>
             </div>
             
-            <!-- 4. Menu (Empty) -->
             <div class="dropdown-wrapper">
-                <span class="dropdown-label">&nbsp;</span>
+                <span class="dropdown-label" id="sound-label">Sound</span>
                 <div class="dropdown">
-                    <button class="dropbtn" onclick="toggleMenu('menu-4')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-                    <div id="menu-4" class="dropdown-content">
-                        <a href="#">Setting 1</a>
-                        <a href="#">Setting 2</a>
+                    <button class="dropbtn" id="sound-btn" onclick="toggleMenu('sound-menu')">Off ▾</button>
+                    <div id="sound-menu" class="dropdown-content">
+                        <a href="#" id="snd-off" onclick="changeSound('Off')">Off</a>
+                        <a href="#" id="snd-k1" onclick="changeSound('Sound 1')">Sound 1</a>
+                        <a href="#" id="snd-k2" onclick="changeSound('Sound 2')">Sound 2</a>
+                        <a href="#" id="snd-k3" onclick="changeSound('Sound 3')">Sound 3</a>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Settings Menu End -->
-
         <h1 class="game-title-text">Typing Speed Test</h1>
         <p class="game-subtitle-text">Type the text below into the box:</p>
         
