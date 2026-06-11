@@ -560,10 +560,15 @@ function updateStats() {
 
     let currentStats = getCurrentLetterStats();
     let elapsedSeconds = 60 - timeLeft;
-    let wpm = elapsedSeconds > 0 ? Math.round(totalCorrectWords / (elapsedSeconds / 60)) : 0;
+    
+    // Toplam doğru harf sayısını buluyoruz
+    let totalChars = totalCorrectLetters + currentStats.correct;
+    
+    // DÜNYA STANDARDI WPM HESAPLAMASI: (Doğru Harf / 5) / Dakika
+    let wpm = elapsedSeconds > 0 ? Math.round((totalChars / 5) / (elapsedSeconds / 60)) : 0;
 
     if (wpmDisplay) wpmDisplay.innerText = wpm;
-    if (correctLettersDisplay) correctLettersDisplay.innerText = totalCorrectLetters + currentStats.correct;
+    if (correctLettersDisplay) correctLettersDisplay.innerText = totalChars;
     if (wrongLettersDisplay) wrongLettersDisplay.innerText = totalWrongLetters + currentStats.wrong;
     if (wrongWordsDisplay) wrongWordsDisplay.innerText = totalWrongWords;
 }
