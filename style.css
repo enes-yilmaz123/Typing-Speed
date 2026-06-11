@@ -344,26 +344,151 @@ body {
     box-shadow: inset 0 0 30px rgba(146, 56, 248, 0.7), 0 5px 10px rgba(0, 0, 0, 0.5);
 }
 
-/* --- ALT BİLGİ (FOOTER) ÇUBUĞU --- */
-.footer-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+/* --- YENİ ALAN: GELİŞMİŞ ALT BİLGİ (FOOTER) TASARIMI --- */
+.game-footer {
     width: 100%;
     background-color: #131c2c; 
-    padding: 12px 0;
+    border-top: 2px solid rgba(146, 56, 248, 0.3);
+    padding: 40px 60px;
     box-sizing: border-box;
-    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.4); 
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5);
     z-index: 20;
-    text-align: center;
+    position: relative;
+    margin-top: 60px;
 }
 
-.footer-bar p {
-    margin: 0;
-    color: #94a3b8; 
-    font-family: 'Courier New', Courier, monospace; 
+.footer-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.footer-left {
+    flex: 1;
+    min-width: 260px;
+}
+
+.footer-logo {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 34px;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 0 0 10px #9238f8, 0 0 20px #9238f8;
+    border-left: 5px solid #4ade80;
+    padding-left: 12px;
+    margin-bottom: 12px;
+    display: inline-block;
+}
+
+.footer-tagline {
+    color: #94a3b8;
     font-size: 14px;
+    font-style: italic;
+    margin: 6px 0;
+}
+
+.footer-copyright {
+    color: #64748b;
+    font-size: 13px;
+    margin-top: 16px;
+}
+
+/* Ortadaki link sütunları mükemmel şekilde ortalandı */
+.footer-center {
+    display: flex;
+    gap: 80px;
+    flex: 2;
+    justify-content: center; /* Sütunlar tam ortaya hizalandı */
+    min-width: 320px;
+}
+
+.footer-column {
+    min-width: 140px;
+    text-align: center; /* Sütun içerikleri ortalandı */
+}
+
+.footer-column h3 {
+    color: #4ade80;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 18px;
+    text-transform: uppercase;
     letter-spacing: 1.5px;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 12px;
+}
+
+.footer-column ul li a {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.footer-column ul li a:hover {
+    color: #9238f8;
+    text-shadow: 0 0 6px rgba(146, 56, 248, 0.7);
+}
+
+/* Footer Sağ Alanı - Biraz daha sağa kaydırıldı ve yeşil çubuğu silindi */
+.footer-right {
+    flex: 1;
+    min-width: 240px;
+    text-align: right; /* Metinler sağa yanaştırılarak sağa kayma etkisi artırıldı */
+}
+
+.footer-right-title {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 0 0 10px #9238f8, 0 0 20px #9238f8; /* Mor neon efekti korundu */
+    margin-bottom: 15px;
+    display: inline-block;
+    letter-spacing: 1.5px;
+}
+
+.footer-right p {
+    color: #94a3b8;
+    font-size: 14px;
+    margin: 0 0 10px 0;
+    font-family: Arial, sans-serif;
+}
+
+/* responsive düzenlemeler */
+@media (max-width: 1024px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .footer-left, .footer-right {
+        text-align: center;
+    }
+    .footer-logo {
+        border-left: none;
+        border-bottom: 3px solid #4ade80;
+        padding-left: 0;
+        padding-bottom: 6px;
+    }
+    .footer-center {
+        flex-direction: column;
+        gap: 35px;
+        align-items: center;
+    }
 }
 
 /* metnin durduğu kutunun ayarları */
