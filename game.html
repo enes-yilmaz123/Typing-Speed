@@ -6,9 +6,61 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <center>
-        <h1>Typing Speed Test</h1>
-        <p>Type the text below into the box:</p>
+    <main class="game-container">
+        
+        <div class="settings-bar">
+            <div class="dropdown-wrapper">
+                <span class="dropdown-label" id="language-label">Language</span>
+                <div class="dropdown">
+                    <button class="dropbtn" id="lang-btn" onclick="toggleMenu('language-menu')">English ▾</button>
+                    <div id="language-menu" class="dropdown-content">
+                        <a href="#" onclick="changeLanguage('English')">English</a>
+                        <a href="#" onclick="changeLanguage('Turkish')">Turkish</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dropdown-wrapper">
+                <span class="dropdown-label" id="difficulty-label">Difficulty</span>
+                <div class="dropdown">
+                    <button class="dropbtn" id="diff-btn" onclick="toggleMenu('difficulty-menu')">Normal ▾</button>
+                    <div id="difficulty-menu" class="dropdown-content">
+                        <a href="#" id="diff-normal" onclick="changeDifficulty('Normal')">Normal</a>
+                        <a href="#" id="diff-hard" onclick="changeDifficulty('Hard')">Hard</a>
+                        <a href="#" id="diff-extreme" onclick="changeDifficulty('Extreme')">Extreme</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dropdown-wrapper">
+                <span class="dropdown-label" id="font-label">Font</span>
+                <div class="dropdown">
+                    <button class="dropbtn" id="font-btn" onclick="toggleMenu('font-menu')">Courier ▾</button>
+                    <div id="font-menu" class="dropdown-content">
+                        <a href="#" onclick="changeFont('Courier New, monospace', 'Courier')">Courier</a>
+                        <a href="#" onclick="changeFont('Arial, sans-serif', 'Arial')">Arial</a>
+                        <a href="#" onclick="changeFont('Times New Roman, serif', 'Times')">Times</a>
+                        <a href="#" onclick="changeFont('Verdana, sans-serif', 'Verdana')">Verdana</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dropdown-wrapper">
+                <span class="dropdown-label" id="sound-label">Sound</span>
+                <div class="dropdown">
+                    <button class="dropbtn" id="sound-btn" onclick="toggleMenu('sound-menu')">Off ▾</button>
+                    <div id="sound-menu" class="dropdown-content">
+                        <a href="#" id="snd-off" onclick="changeSound('Off')">Off</a>
+                        <a href="#" id="snd-k1" onclick="changeSound('Sound 1')">Sound 1</a>
+                        <a href="#" id="snd-k2" onclick="changeSound('Sound 2')">Sound 2</a>
+                        <a href="#" id="snd-k3" onclick="changeSound('Sound 3')">Sound 3</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="game-title-text">Typing Speed Test</h1>
+        <p class="game-subtitle-text">Type the text below into the box:</p>
         
         <div id="target-text">Loading words...</div>
         <br>
@@ -16,7 +68,11 @@
         <input id="user-input" type="text" placeholder="Start typing to begin..." autocomplete="off">
         
         <br><br>
-        <p>Time Left: <span id="time">60</span> seconds</p>
+        
+        <div class="timer-box" id="timer-box">
+            <span class="timer-label">TIME LEFT</span>
+            <span class="timer-value"><span id="time">60</span>s</span>
+        </div>
 
         <div id="stats">
             <div class="stat-box">
@@ -36,8 +92,33 @@
                 <strong id="wrong-words">0</strong>
             </div>
         </div>
+
+        <div id="last-game-stats" class="side-panel">
+            <h3 id="lg-title">Last Game</h3>
+            <div class="side-stat">
+                <span>WPM</span>
+                <strong id="lg-wpm">0</strong>
+            </div>
+            <div class="side-stat">
+                <span id="lg-correct-label">Correct Letters</span>
+                <strong id="lg-correct">0</strong>
+            </div>
+            <div class="side-stat">
+                <span id="lg-wrong-label">Wrong Letters</span>
+                <strong id="lg-wrong">0</strong>
+            </div>
+            <div class="side-stat">
+                <span id="lg-wrong-words-label">Wrong Words</span>
+                <strong id="lg-wrong-words">0</strong>
+            </div>
+            
+            <div class="best-stat-box">
+                <h4 id="best-wpm-label">Best WPM</h4>
+                <strong id="best-wpm-value">0</strong>
+            </div>
+        </div>
         
-    </center>
+    </main>
 
     <script src="script.js"></script>
 </body>
