@@ -33,15 +33,16 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- 3. Menu (Empty) -->
+            <!-- 3. menu font  -->
             <div class="dropdown-wrapper">
-                <span class="dropdown-label">&nbsp;</span>
+                <span class="dropdown-label" id="font-label">Font</span>
                 <div class="dropdown">
-                    <button class="dropbtn" onclick="toggleMenu('menu-3')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-                    <div id="menu-3" class="dropdown-content">
-                        <a href="#">Setting 1</a>
-                        <a href="#">Setting 2</a>
+                    <button class="dropbtn" id="font-btn" onclick="toggleMenu('font-menu')">Courier ▾</button>
+                    <div id="font-menu" class="dropdown-content">
+                        <a href="#" onclick="changeFont('Courier New, monospace', 'Courier')">Courier</a>
+                        <a href="#" onclick="changeFont('Arial, sans-serif', 'Arial')">Arial</a>
+                        <a href="#" onclick="changeFont('Times New Roman, serif', 'Times')">Times</a>
+                        <a href="#" onclick="changeFont('Verdana, sans-serif', 'Verdana')">Verdana</a>
                     </div>
                 </div>
             </div>

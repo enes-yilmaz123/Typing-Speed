@@ -1,3 +1,5 @@
+// --- DİL SEÇENEKLERİ, ÇEVİRİLER VE KELİME HAVUZLARI ---
+
 // 1. Normal Zorluk (Kısa ve standart kelimeler)
 const wordsEnNormal = ["apple", "computer", "code", "student", "keyboard", "mouse", "screen", "project", "window", "game", "speed", "test", "coffee", "network", "system", "book", "chair", "desk", "egg", "fish"];
 const wordsTrNormal = ["elma", "bilgisayar", "kod", "öğrenci", "klavye", "fare", "ekran", "proje", "pencere", "oyun", "hız", "test", "kahve", "ağ", "sistem", "kitap", "sandalye", "masa", "yumurta", "balık"];
@@ -12,7 +14,7 @@ const wordsTrExtreme = ["Merhaba!", "Türkiye'de", "Bekle,", "A.B.D.", "Wi-Fi", 
 
 const uiTranslations = {
     "English": {
-        "langLabel": "Language", // YENİ EKLENDİ
+        "langLabel": "Language",
         "title": "Typing Speed Test",
         "subtitle": "Type the text below into the box:",
         "placeholder": "Start typing to begin...",
@@ -25,15 +27,16 @@ const uiTranslations = {
         "difficultyLabel": "Difficulty",
         "diffNormal": "Normal",
         "diffHard": "Hard",
-        "diffExtreme": "Extreme"
+        "diffExtreme": "Extreme",
+        "fontLabel": "Font" 
     },
     "Turkish": {
-        "langLabel": "Dil", // YENİ EKLENDİ
+        "langLabel": "Dil",
         "title": "Yazma Hızı Testi",
         "subtitle": "Aşağıdaki metni kutuya yazın:",
         "placeholder": "Başlamak için yazmaya başlayın...",
         "timeLeft": "KALAN SÜRE",
-        "wpm": "DKS", // Dakika Başına Kelime
+        "wpm": "DKS", 
         "correctLetters": "Doğru Harfler",
         "wrongLetters": "Yanlış Harfler",
         "wrongWords": "Yanlış Kelimeler",
@@ -41,12 +44,14 @@ const uiTranslations = {
         "difficultyLabel": "Zorluk",
         "diffNormal": "Normal",
         "diffHard": "Zor",
-        "diffExtreme": "Ekstrem"
+        "diffExtreme": "Ekstrem",
+        "fontLabel": "Yazı Tipi" 
     }
 };
 
 let currentLang = "English";
 let currentDifficulty = "Normal";
+let currentFont = "Courier New, monospace";
 let wordsList = wordsEnNormal;
 
 // Zaman olcumu icin degiskenler
@@ -66,10 +71,12 @@ let lastWrongAttempt = "";
 window.onload = function() {
     let savedLang = localStorage.getItem("preferredLang") || "English";
     let savedDiff = localStorage.getItem("preferredDiff") || "Normal";
+    let savedFont = localStorage.getItem("preferredFont") || "Courier New, monospace";
+    let savedFontName = localStorage.getItem("preferredFontName") || "Courier";
     
-    // Önce dili, sonra zorluğu ayarla ki buton isimleri doğru dilde gelsin
     changeLanguage(savedLang);
     changeDifficulty(savedDiff);
+    changeFont(savedFont, savedFontName); 
 };
 
 // Aktif dil ve zorluk derecesine göre kelime havuzunu güncelleyen fonksiyon
@@ -85,12 +92,35 @@ function updateWordsList() {
     }
 }
 
+// --- FONT DEĞİŞTİRME İŞLEMİ  ---
+function changeFont(fontValue, fontName) {
+    currentFont = fontValue;
+    
+    // Hafızaya kaydet
+    localStorage.setItem("preferredFont", fontValue);
+    localStorage.setItem("preferredFontName", fontName);
+
+    // Butonun içindeki yazıyı güncelle
+    let fontBtn = document.getElementById("font-btn");
+    if (fontBtn) fontBtn.innerHTML = fontName + " ▾";
+
+    // Menüyü kapat
+    let fontMenu = document.getElementById("font-menu");
+    if(fontMenu) fontMenu.classList.remove("show-menu");
+
+    // Sadece hedef metin kutusunu ve kullanıcının yazı yazdığı kutuyu değiştir
+    let targetText = document.getElementById("target-text");
+    let userInput = document.getElementById("user-input");
+    
+    if (targetText) targetText.style.fontFamily = fontValue;
+    if (userInput) userInput.style.fontFamily = fontValue;
+}
+
 // --- DİL DEĞİŞTİRME İŞLEMİ ---
 function changeLanguage(selectedLang) {
     currentLang = selectedLang;
     localStorage.setItem("preferredLang", selectedLang);
     
-    // Dil butonunun içindeki yazıyı değiştir
     let langBtn = document.getElementById("lang-btn");
     if(langBtn) langBtn.innerHTML = selectedLang + " ▾";
     
@@ -99,16 +129,17 @@ function changeLanguage(selectedLang) {
 
     let t = uiTranslations[selectedLang];
     
-    // Arayüz metinlerini çevir
     let langLabelSpan = document.getElementById("language-label");
-    if(langLabelSpan) langLabelSpan.innerText = t.langLabel; // YENİ EKLENDİ
+    if(langLabelSpan) langLabelSpan.innerText = t.langLabel; 
+    
+    let fontLabelSpan = document.getElementById("font-label");
+    if(fontLabelSpan) fontLabelSpan.innerText = t.fontLabel; // FONT MENÜSÜ ÇEVİRİSİ
     
     document.querySelector(".game-title-text").innerText = t.title;
     document.querySelector(".game-subtitle-text").innerText = t.subtitle;
     document.getElementById("user-input").placeholder = t.placeholder;
     document.querySelector(".timer-label").innerText = t.timeLeft;
     
-    // İstatistik kutularını çevir
     let statBoxes = document.querySelectorAll(".stat-box span");
     if(statBoxes.length >= 4) {
         statBoxes[0].innerText = t.wpm;
@@ -117,13 +148,11 @@ function changeLanguage(selectedLang) {
         statBoxes[3].innerText = t.wrongWords;
     }
 
-    // Zorluk menüsünün çevirilerini yap
     document.getElementById("difficulty-label").innerText = t.difficultyLabel;
     document.getElementById("diff-normal").innerText = t.diffNormal;
     document.getElementById("diff-hard").innerText = t.diffHard;
     document.getElementById("diff-extreme").innerText = t.diffExtreme;
 
-    // Seçili olan zorluk butonunun ismini o dile çevir
     let diffText = currentDifficulty === "Normal" ? t.diffNormal : (currentDifficulty === "Hard" ? t.diffHard : t.diffExtreme);
     document.getElementById("diff-btn").innerHTML = diffText + " ▾";
 
@@ -138,7 +167,6 @@ function changeDifficulty(diff) {
 
     let t = uiTranslations[currentLang];
     
-    // Butonun adını aktif dile göre değiştir
     let diffText = diff === "Normal" ? t.diffNormal : (diff === "Hard" ? t.diffHard : t.diffExtreme);
     let diffBtn = document.getElementById("diff-btn");
     if (diffBtn) diffBtn.innerHTML = diffText + " ▾";
@@ -183,7 +211,6 @@ function generateRandomWords() {
     currentWordIndex = 0;
     targetDiv.innerHTML = "";
 
-    // 10 rastgele kelime secelim
     for (let i = 0; i < 10; i++) {
         let randomIndex = Math.floor(Math.random() * wordsList.length);
         currentTargetWords.push(wordsList[randomIndex]);
