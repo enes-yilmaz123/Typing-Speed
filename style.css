@@ -77,10 +77,10 @@ body {
 }
 
 .menu-description {
-    font-size: 20px;
+    font-size: 24px;
     color: #94a3b8; 
-    margin: 0 0 90px 0;
-    letter-spacing: 1px;
+    margin: 0 0 180px 0;
+    letter-spacing: 2px;
     z-index: 10;
     position: relative;
 }
@@ -124,7 +124,7 @@ body {
     transition: all 0.3s ease;
 }
 
-/*BELİRGİN QWERTY VURGUSU */
+/* BELİRGİN QWERTY VURGUSU */
 .highlight-qwerty {
     color: #4ade80; 
     background-color: rgba(74, 222, 128, 0.3);
@@ -171,7 +171,7 @@ body {
 .profile-modal {
     display: none;
     position: absolute; 
-    top: 58px; 
+    top: 61px; 
     right: 0; 
     z-index: 100;
 }
@@ -470,3 +470,60 @@ body {
     background-color: rgba(248, 113, 113, 0.2);
     border-radius: 3px;
 }
+
+/* --- LIDERLIK TABLOSU AYARLARI --- */
+.static-score-container {
+    width: min(320px, 90vw); 
+    background-color: rgba(19, 28, 44, 0.7);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(146, 56, 248, 0.4);
+    border-radius: 16px;
+    padding: 15px 20px; 
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(146, 56, 248, 0.1);
+    z-index: 10;
+    
+    position: absolute;
+    left: 40px; 
+    top: calc(50% - 280px);
+    transform: translateY(-50%);
+    margin-bottom: 0; 
+}
+
+/* Daily Score tablosu */
+.static-score-container.right-side {
+    left: auto;
+    right: 40px;
+}
+
+.static-score-title {
+    margin: 0 0 10px 0; 
+    font-family: 'Courier New', Courier, monospace;
+    color: #ffffff;
+    font-size: 18px;
+    text-shadow: 0 0 8px #9238f8;
+    letter-spacing: 2px;
+    text-align: center; /* Yazı ortaya hizalandı */
+}
+
+.static-score-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #f8fafc;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.static-score-table td {
+    padding: 8px 10px; /* Tablo hücreleri daraltılarak yükseklik azaltıldı */
+    text-align: left;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.static-score-table tr:last-child td {
+    border-bottom: none;
+}
+
+.static-rank-1 { color: #fbbf24; text-shadow: 0 0 6px #fbbf24; }
+.static-rank-2 { color: #94a3b8; text-shadow: 0 0 6px #94a3b8; }
+.static-rank-3 { color: #b45309; text-shadow: 0 0 6px #b45309; }
