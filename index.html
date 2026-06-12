@@ -8,7 +8,7 @@
 <body>
     
     <div class="header-bar">
-        <h1 class="game-title">TYPING SPEED</h1>
+        <h1 class="game-title" onclick="window.location.reload();" style="cursor: pointer; user-select: none;">TYPING SPEED</h1>
         <div class="header-actions">
             <button class="login-btn" id="login-button">LOG IN</button>
             <div class="profile-container" id="profile-trigger">
@@ -43,50 +43,12 @@
             </a>
         </div>
 
-        <div class="static-score-container">
-            <h2 class="static-score-title">HIGHSCORES</h2>
-            <table class="static-score-table">
-                <tbody id="main-leaderboard-body">
-                    <tr>
-                        <td class="static-rank-1">#1</td>
-                        <td>GamerX</td>
-                        <td class="correct">95 WPM</td>
-                    </tr>
-                    <tr>
-                        <td class="static-rank-2">#2</td>
-                        <td>TypeMaster</td>
-                        <td class="correct">88 WPM</td>
-                    </tr>
-                    <tr>
-                        <td class="static-rank-3">#3</td>
-                        <td>Speedy</td>
-                        <td class="correct">74 WPM</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="static-score-container right-side">
-            <h2 class="static-score-title">DAILY SCORE</h2>
-            <table class="static-score-table">
-                <tbody id="daily-leaderboard-body">
-                    <tr>
-                        <td class="static-rank-1">#1</td>
-                        <td>FastFingers</td>
-                        <td class="correct">92 WPM</td>
-                    </tr>
-                    <tr>
-                        <td class="static-rank-2">#2</td>
-                        <td>NinjaTyper</td>
-                        <td class="correct">85 WPM</td>
-                    </tr>
-                    <tr>
-                        <td class="static-rank-3">#3</td>
-                        <td>QuickCat</td>
-                        <td class="correct">70 WPM</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="best-score-container">
+            <h2 class="best-score-title">BEST WPM</h2>
+            <div class="best-score-display">
+                <div class="best-score-name" id="global-best-name">No Record</div>
+                <div class="best-score-value" id="global-best-wpm">0 WPM</div>
+            </div>
         </div>
 
         <div class="keyboard-decoration">

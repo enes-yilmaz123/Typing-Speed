@@ -334,7 +334,7 @@ body {
     transform: translateY(-2px);
 }
 
-/* OYUN EKRANI & TYPING ALANI (Senin Tasarımın)*/
+/* OYUN EKRANI ve TYPING ALANI*/
 .game-container {
     display: flex;
     flex-direction: column;
@@ -424,7 +424,7 @@ body {
 
 #user-input::placeholder { color: #94a3b8; }
 
-/* İSTATİSTİKLER, ZAMANLAYICI & BUTONLAR*/
+/* İSTATİSTİKLER, ZAMANLAYICI ve BUTONLAR*/
 #stats {
     display: flex;
     justify-content: center;
@@ -719,15 +719,15 @@ body {
     }
 }
 
-/* STATİK SKOR TABLOSU (Arkadaşın Tasarımı)*/
-.static-score-container {
+/* BEST WPM TABLOSU */
+.best-score-container {
     width: min(320px, 90vw); 
     background-color: rgba(19, 28, 44, 0.7);
     backdrop-filter: blur(8px);
-    border: 2px solid rgba(146, 56, 248, 0.4);
+    border: 2px solid rgba(56, 189, 248, 0.4); 
     border-radius: 16px;
-    padding: 15px 20px; 
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(146, 56, 248, 0.1);
+    padding: 20px; 
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(56, 189, 248, 0.1);
     z-index: 10;
     
     position: absolute;
@@ -737,41 +737,46 @@ body {
     margin-bottom: 0; 
 }
 
-.static-score-container.right-side {
-    left: auto;
-    right: 40px;
-}
-
-.static-score-title {
-    margin: 0 0 10px 0; 
+.best-score-title {
+    margin: 0 0 15px 0; 
     font-family: 'Courier New', Courier, monospace;
     color: #ffffff;
-    font-size: 18px;
-    text-shadow: 0 0 8px #9238f8;
+    font-size: 22px;
+    text-shadow: 0 0 10px #38bdf8;
     letter-spacing: 2px;
     text-align: center;
 }
 
-.static-score-table {
-    width: 100%;
-    border-collapse: collapse;
-    color: #f8fafc;
+.best-score-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(30, 41, 59, 0.6);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #334155;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+.best-score-name {
+    color: #fbbf24;
     font-family: 'Courier New', Courier, monospace;
-}
-
-.static-score-table td {
-    padding: 8px 10px; 
-    text-align: left;
-    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
-    font-size: 15px;
+    font-size: 18px;
     font-weight: bold;
+    text-shadow: 0 0 8px rgba(251, 191, 36, 0.6);
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.static-score-table tr:last-child td { border-bottom: none; }
-
-.static-rank-1 { color: #fbbf24; text-shadow: 0 0 6px #fbbf24; }
-.static-rank-2 { color: #94a3b8; text-shadow: 0 0 6px #94a3b8; }
-.static-rank-3 { color: #b45309; text-shadow: 0 0 6px #b45309; }
+.best-score-value {
+    color: #4ade80;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(74, 222, 128, 0.6);
+}
 
 /* FOOTER (ALT BİLGİ - Arkadaşın Tasarımı)*/
 .game-footer {
@@ -1009,37 +1014,44 @@ body {
 }
 
 /*RESPONSIVE DÜZEN Farklı Ekranlar İçin*/
-@media (max-width: 1450px) {
+
+@media (max-width: 1500px), (max-height: 850px) {
     .menu-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
         height: auto;
         min-height: 100vh;
-        padding-top: 120px;
-        padding-bottom: 80px;
-        justify-content: flex-start;
+        padding: 120px 20px 80px 20px;
+        gap: 40px; 
     }
     
-    /* Başla butonunun sabitliğini kaldırıp akışa dahil ediyoruz */
+    .menu-description {
+        margin-bottom: 10px;
+    }
+
     .action-container-absolute {
         position: relative;
         top: auto;
         left: auto;
         transform: none;
-        margin: 40px 0;
+        order: 1; /* İlk sırada Start butonu olsun */
     }
 
-    /* Skor tablolarını yanlardan kurtarıp alt alta merkeze alıyoruz */
-    .static-score-container {
+    .keyboard-decoration {
+        margin-top: 0;
+        order: 2; /* İkinci sırada klavye olsun */
+    }
+
+    .best-score-container {
         position: relative !important;
         left: auto !important;
         right: auto !important;
         top: auto !important;
         transform: none !important;
-        margin: 20px auto;
-        width: 90%;
-        max-width: 400px;
-    }
-    
-    .keyboard-decoration {
-        margin-top: 40px;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        order: 3; 
     }
 }

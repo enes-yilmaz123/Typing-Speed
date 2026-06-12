@@ -35,7 +35,7 @@ const uiTranslations = {
         "lgCorrect": "Correct Letters",
         "lgWrong": "Wrong Letters",
         "lgWrongWords": "Wrong Words",
-        "bestWpmLabel": "Best WPM " // YENİ
+        "bestWpmLabel": "Best WPM " 
     },
     "Turkish": {
         "langLabel": "Dil",
@@ -62,7 +62,7 @@ const uiTranslations = {
         "lgCorrect": "Doğru Harfler",
         "lgWrong": "Yanlış Harfler",
         "lgWrongWords": "Yanlış Kelimeler",
-        "bestWpmLabel": "En İyi DKS " // YENİ
+        "bestWpmLabel": "En İyi DKS " 
     }
 };
 
@@ -98,7 +98,7 @@ window.onload = function() {
     
     loadSoundsToRAM();
     updateLastGameUI(); 
-    updateBestWpmUI(); // Sayfa açılırken rekoru da yükle
+    updateBestWpmUI(); 
 };
 
 // --- SON OYUN VE REKOR İSTATİSTİKLERİNİ GETİRME ---
@@ -120,8 +120,18 @@ function updateLastGameUI() {
 
 function updateBestWpmUI() {
     let savedBest = localStorage.getItem("bestWpm") || "0";
+    let savedBestName = localStorage.getItem("bestWpmName") || "No Record";
+
+    // game.html içindeki yan panel rekoru
     let bestWpmEl = document.getElementById("best-wpm-value");
     if (bestWpmEl) bestWpmEl.innerText = savedBest;
+
+    // index.html içindeki yeni BEST WPM paneli
+    let globalBestNameEl = document.getElementById("global-best-name");
+    let globalBestWpmEl = document.getElementById("global-best-wpm");
+    
+    if (globalBestNameEl) globalBestNameEl.innerText = savedBestName;
+    if (globalBestWpmEl) globalBestWpmEl.innerText = savedBest + " WPM";
 }
 
 function updateWordsList() {
@@ -252,7 +262,7 @@ function changeLanguage(selectedLang) {
         "lg-correct-label": t.lgCorrect,
         "lg-wrong-label": t.lgWrong,
         "lg-wrong-words-label": t.lgWrongWords,
-        "best-wpm-label": t.bestWpmLabel // YENİ ÇEVİRİ BAĞLANDI
+        "best-wpm-label": t.bestWpmLabel 
     };
 
     for (let id in elementsToUpdate) {
@@ -369,11 +379,11 @@ window.onload = function() {
     generateRandomWords();
     prepareTest();
     initProfileLogic();
+    updateBestWpmUI();
 };
 
-// kullanici adini yerel hafizada saklayan ve degistiren fonksiyon
 function initProfileLogic() {
-    const headerActionBtn = document.getElementById("login-button"); // LOG IN / LOG OUT Butonu
+    const headerActionBtn = document.getElementById("login-button"); 
     const profileTrigger = document.getElementById("profile-trigger");
     const profileModal = document.getElementById("profile-modal");
     const modalCancel = document.getElementById("modal-cancel");
@@ -381,11 +391,9 @@ function initProfileLogic() {
     const usernameInput = document.getElementById("username-input");
     const profileAvatar = document.getElementById("profile-avatar");
 
-    // Kullanıcının giriş yapıp yapmadığını kontrol et
     let isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
     let savedName = localStorage.getItem("gameUsername") || "Gamer";
 
-    // Arayüzü hafızadaki verilere göre başlat
     if (profileAvatar) profileAvatar.textContent = savedName.charAt(0).toUpperCase();
     if (usernameInput) usernameInput.value = savedName;
     
@@ -401,13 +409,11 @@ function initProfileLogic() {
 
     if (!profileModal) return;
 
-    // Header butonuna (LOG IN / LOG OUT) tıklama olayları
     if (headerActionBtn) {
         headerActionBtn.onclick = function(e) {
             e.stopPropagation(); 
             
             if (headerActionBtn.textContent === "LOG OUT") {
-                // LOG OUT İŞLEMİ: Hafızayı temizle ve arayüzü sıfırla
                 localStorage.removeItem("gameUsername");
                 localStorage.removeItem("isLoggedIn");
                 
@@ -416,9 +422,8 @@ function initProfileLogic() {
                 
                 headerActionBtn.textContent = "LOG IN";
                 headerActionBtn.classList.remove("logout-state");
-                profileModal.classList.remove("active"); // Eğer kutu açıksa kapat
+                profileModal.classList.remove("active"); 
             } else {
-                // LOG IN İŞLEMİ: Sadece profil kutusunu aç
                 profileModal.classList.toggle("active");
                 if (profileModal.classList.contains("active") && usernameInput) {
                     usernameInput.focus();
@@ -427,7 +432,6 @@ function initProfileLogic() {
         };
     }
 
-    // Profil avatarına (G) tıklayınca isim değiştirmek için her zaman kutuyu aç
     if (profileAvatar) {
         profileAvatar.onclick = function(e) {
             e.stopPropagation();
@@ -452,13 +456,11 @@ function initProfileLogic() {
             if (newName === "") {
                 newName = "Gamer";
             }
-            // İsmi kaydet ve login durumunu true yap
             localStorage.setItem("gameUsername", newName);
             localStorage.setItem("isLoggedIn", "true");
             
             if (profileAvatar) profileAvatar.textContent = newName.charAt(0).toUpperCase();
             
-            // Kayıt başarılıysa header butonunu LOG OUT olarak değiştir
             if (headerActionBtn) {
                 headerActionBtn.textContent = "LOG OUT";
                 headerActionBtn.classList.add("logout-state");
@@ -468,7 +470,6 @@ function initProfileLogic() {
         };
     }
 
-    // Modal dışına veya bağımsız alanlara tıklandığında pencereyi kapatma
     window.addEventListener("click", function(event) {
         if (profileTrigger && !profileTrigger.contains(event.target) && headerActionBtn && !headerActionBtn.contains(event.target)) {
             profileModal.classList.remove("active");
@@ -527,13 +528,11 @@ function startTimer() {
                 userInput.value = "";      
             }
 
-            // SÜRE BİTTİĞİNDE VERİLERİ KAYDET
             let finalWpmText = document.getElementById("wpm").innerText;
             let finalCorrect = document.getElementById("correct-letters").innerText;
             let finalWrong = document.getElementById("wrong-letters").innerText;
             let finalWrongWords = document.getElementById("wrong-words").innerText;
 
-            // Son oyunu kaydet
             let lastGameData = {
                 wpm: finalWpmText,
                 correct: finalCorrect,
@@ -543,14 +542,16 @@ function startTimer() {
             localStorage.setItem("lastGameStats", JSON.stringify(lastGameData));
             updateLastGameUI(); 
 
-            // REKOR KONTROLÜ (Yeni WPM eskisinden büyükse kaydet)
+            // REKOR KONTROLÜ
             let finalWpmNum = parseInt(finalWpmText) || 0;
             let currentBestNum = parseInt(localStorage.getItem("bestWpm")) || 0;
 
             if (finalWpmNum > currentBestNum) {
+                let currentUsername = localStorage.getItem("gameUsername") || "Gamer";
                 localStorage.setItem("bestWpm", finalWpmNum);
+                localStorage.setItem("bestWpmName", currentUsername);
             }
-            updateBestWpmUI(); // Arayüzde rekoru hemen güncelle!
+            updateBestWpmUI(); 
 
             let targetDiv = document.getElementById("target-text");
             if (targetDiv) {
