@@ -1,6 +1,4 @@
-/* =========================================
-   ORTAK AYARLAR & HEADER
-   ========================================= */
+/* ORTAK AYARLAR & HEADER*/
 body {
     background-color: #0f172a; 
     color: #ffffff;
@@ -74,9 +72,7 @@ body {
     text-shadow: 0 0 8px #f87171;
 }
 
-/* =========================================
-   ANA MENÜ & BAŞLANGIÇ BUTONU
-   ========================================= */
+/* ANA MENÜ & BAŞLANGIÇ BUTONU*/
 .menu-container {
     display: flex;
     flex-direction: column;
@@ -140,9 +136,7 @@ body {
     box-shadow: 0 0 10px #4ade80;
 }
 
-/* =========================================
-   SAYDAM KLAVYE DEKORASYONU
-   ========================================= */
+/*SAYDAM KLAVYE DEKORASYONU*/
 .keyboard-decoration {
     margin-top: -60px;
     display: flex;
@@ -161,20 +155,21 @@ body {
 .key-row {
     display: flex;
     justify-content: center;
-    gap: 25px; 
+    gap: 1.5vw;
+    flex-wrap: wrap; 
 }
 
 .key {
-    width: 100px; 
-    height: 100px; 
+    width: clamp(50px, 6vw, 100px); 
+    height: clamp(50px, 6vw, 100px); 
     background-color: rgba(30, 41, 59, 0.6); 
     border: 3px solid rgba(146, 56, 248, 0.5); 
-    border-radius: 25px; 
+    border-radius: 20px; 
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 80px; 
+    font-size: clamp(30px, 4vw, 80px); 
     font-weight: bold;
     color: rgba(255, 255, 255, 0.6); 
     box-shadow: inset 0 0 30px rgba(146, 56, 248, 0.15), 0 10px 20px rgba(0, 0, 0, 0.6);
@@ -191,12 +186,11 @@ body {
 }
 
 .space-bar {
-    width: 1260px; 
+    width: 100%; 
+    max-width: 800px;
 }
 
-/* =========================================
-   PROFİL VE MODAL (POPUP) PENCERELERİ
-   ========================================= */
+/* PROFİL VE MODAL (POPUP) PENCERELERİ*/
 .profile-container {
     position: relative; 
     display: flex;
@@ -340,9 +334,7 @@ body {
     transform: translateY(-2px);
 }
 
-/* =========================================
-   OYUN EKRANI & TYPING ALANI (Senin Tasarımın)
-   ========================================= */
+/* OYUN EKRANI & TYPING ALANI (Senin Tasarımın)*/
 .game-container {
     display: flex;
     flex-direction: column;
@@ -432,9 +424,7 @@ body {
 
 #user-input::placeholder { color: #94a3b8; }
 
-/* =========================================
-   İSTATİSTİKLER, ZAMANLAYICI & BUTONLAR
-   ========================================= */
+/* İSTATİSTİKLER, ZAMANLAYICI & BUTONLAR*/
 #stats {
     display: flex;
     justify-content: center;
@@ -556,9 +546,7 @@ body {
     transform: scale(1.05);
 }
 
-/* =========================================
-   AYARLAR MENÜSÜ & YAN PANELLER
-   ========================================= */
+/* AYARLAR MENÜSÜ & YAN PANELLER*/
 .settings-bar {
     display: flex;
     justify-content: center;
@@ -731,9 +719,7 @@ body {
     }
 }
 
-/* =========================================
-   STATİK SKOR TABLOSU (Arkadaşın Tasarımı)
-   ========================================= */
+/* STATİK SKOR TABLOSU (Arkadaşın Tasarımı)*/
 .static-score-container {
     width: min(320px, 90vw); 
     background-color: rgba(19, 28, 44, 0.7);
@@ -787,9 +773,7 @@ body {
 .static-rank-2 { color: #94a3b8; text-shadow: 0 0 6px #94a3b8; }
 .static-rank-3 { color: #b45309; text-shadow: 0 0 6px #b45309; }
 
-/* =========================================
-   FOOTER (ALT BİLGİ - Arkadaşın Tasarımı)
-   ========================================= */
+/* FOOTER (ALT BİLGİ - Arkadaşın Tasarımı)*/
 .game-footer {
     width: 100%;
     background-color: #131c2c; 
@@ -1021,5 +1005,41 @@ body {
 @media (max-width: 1024px) {
     .game-theme-footer .footer-logo {
         border-bottom-color: #38bdf8;
+    }
+}
+
+/*RESPONSIVE DÜZEN Farklı Ekranlar İçin*/
+@media (max-width: 1450px) {
+    .menu-container {
+        height: auto;
+        min-height: 100vh;
+        padding-top: 120px;
+        padding-bottom: 80px;
+        justify-content: flex-start;
+    }
+    
+    /* Başla butonunun sabitliğini kaldırıp akışa dahil ediyoruz */
+    .action-container-absolute {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin: 40px 0;
+    }
+
+    /* Skor tablolarını yanlardan kurtarıp alt alta merkeze alıyoruz */
+    .static-score-container {
+        position: relative !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        transform: none !important;
+        margin: 20px auto;
+        width: 90%;
+        max-width: 400px;
+    }
+    
+    .keyboard-decoration {
+        margin-top: 40px;
     }
 }
