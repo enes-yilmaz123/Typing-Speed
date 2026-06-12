@@ -256,6 +256,9 @@ function changeSound(soundType) {
 
     let soundMenu = document.getElementById("sound-menu");
     if (soundMenu) soundMenu.classList.remove("show-menu");
+
+    let userInput = document.getElementById("user-input");
+    if (userInput) userInput.focus();
 }
 
 // --- FONT DEĞİŞTİRME ---
@@ -275,6 +278,8 @@ function changeFont(fontValue, fontName) {
     
     if (targetText) targetText.style.fontFamily = fontValue;
     if (userInput) userInput.style.fontFamily = fontValue;
+
+    userInput.focus();
 }
 
 // --- DİL DEĞİŞTİRME ---
@@ -348,6 +353,9 @@ function changeLanguage(selectedLang) {
 
     updateWordsList();
     restartGame();
+
+    let userInput = document.getElementById("user-input");
+    if (userInput) userInput.focus();
 }
 
 // --- ZORLUK DEĞİŞTİRME ---
@@ -365,6 +373,9 @@ function changeDifficulty(diff) {
 
     updateWordsList();
     restartGame();
+
+    let userInput = document.getElementById("user-input");
+    if (userInput) userInput.focus();
 }
 
 // MENÜLERİ AÇMA/KAPAMA
