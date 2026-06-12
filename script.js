@@ -199,7 +199,7 @@ let totalCorrectWords = 0;
 let totalCorrectLetters = 0;
 let totalWrongWords = 0;
 let totalWrongLetters = 0;
-let lastWrongAttempt = "";
+// lastWrongAttempt değişkeni temizlendi
 
 window.onload = function() {
     // --- 1. İlk bölümden gelen ayar ve ses yüklemeleri ---
@@ -214,7 +214,7 @@ window.onload = function() {
     changeFont(savedFont, savedFontName);
     changeSound(savedSound);
     
-    loadSoundsToRAM(); // <--- İŞTE BU ARTIK ÇALIŞACAK
+    loadSoundsToRAM(); 
     updateLastGameUI(); 
     
     // --- 2. İkinci bölümden gelen oyun başlatma fonksiyonları ---
@@ -631,7 +631,6 @@ function prepareTest() {
     totalCorrectLetters = 0;
     totalWrongLetters = 0;
     totalWrongWords = 0;
-    lastWrongAttempt = "";
 
     if (timerInterval) clearInterval(timerInterval);
     if (timeDisplay) timeDisplay.innerText = timeLeft;
@@ -720,9 +719,6 @@ function handleTyping() {
     }
 
     updateCurrentWordFeedback();
-    if (userInput.value.trim() !== lastWrongAttempt) {
-        lastWrongAttempt = "";
-    }
     updateStats();
 }
 
@@ -754,20 +750,26 @@ function submitCurrentWord() {
     let currentWord = currentTargetWords[currentWordIndex];
     let currentSpan = getCurrentWordSpan();
 
+
     if (typedWord === currentWord) {
         totalCorrectWords++;
-        totalCorrectLetters += typedWord.length;
-        lastWrongAttempt = "";
+        totalCorrectLetters += currentWord.length;
         if (currentSpan) currentSpan.classList.add("completed-word");
-    } else {
-        if (typedWord !== lastWrongAttempt) {
-            totalWrongWords++;
-            lastWrongAttempt = typedWord;
-        }
+    } 
+
+    else {
+        totalWrongWords++; 
         if (currentSpan) currentSpan.classList.add("missed-word");
         
-        let currentStats = getCurrentLetterStats();
-        totalWrongLetters += currentStats.wrong;
+        let wrongCharsCount = 0;
+        let maxLength = Math.max(typedWord.length, currentWord.length);
+        
+        for (let i = 0; i < maxLength; i++) {
+            if (typedWord[i] !== currentWord[i]) {
+                wrongCharsCount++;
+            }
+        }
+        totalWrongLetters += wrongCharsCount;
     }
 
     currentWordIndex++;
