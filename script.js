@@ -2,12 +2,15 @@
 
 const wordsEnNormal = ["apple", "computer", "code", "student", "keyboard", "mouse", "screen", "project", "window", "game", "speed", "test", "coffee", "network", "system", "book", "chair", "desk", "egg", "fish"];
 const wordsTrNormal = ["elma", "bilgisayar", "kod", "öğrenci", "klavye", "fare", "ekran", "proje", "pencere", "oyun", "hız", "test", "kahve", "ağ", "sistem", "kitap", "sandalye", "masa", "yumurta", "balık"];
+const wordsCNormal = ["int", "char", "void", "main", "for", "while", "if", "else", "return", "break", "struct", "float", "double", "switch", "case", "sizeof", "null", "long", "short", "const"];
 
 const wordsEnHard = ["experience", "government", "understand", "difference", "management", "technology", "information", "university", "particular", "development", "population", "production", "performance", "environment", "traditional"];
 const wordsTrHard = ["araştırmacı", "sürdürülebilir", "gerçekleştirme", "değerlendirme", "koordinasyon", "kütüphane", "laboratuvar", "uluslararası", "mühendislik", "üniversite", "organizasyon", "sorumluluk", "memnuniyet", "bağımsızlık", "vazgeçilmez"];
+const wordsCHard = ["include", "typedef", "unsigned", "continue", "default", "extern", "register", "volatile", "static", "pointer", "malloc", "calloc", "printf", "scanf", "strlen"];
 
 const wordsEnExtreme = ["Hello!", "It's", "Wait,", "U.S.A.", "Wi-Fi", "100%", "O'clock", "Code;", "A.I.", "Yes/No", "X-Ray", "Top-tier", "#1", "$100", "Why?", "C++", "T-Shirt", "Don't", "Stop.", "Well-done"];
 const wordsTrExtreme = ["Merhaba!", "Türkiye'de", "Bekle,", "A.B.D.", "Wi-Fi", "%100", "Saat'te", "Kod;", "Yapay-Zeka", "Evet/Hayır", "Röntgen", "Üst-düzey", "#1", "100₺", "Neden?", "C++", "T-Shirt", "Yapma!", "Dur.", "E-Posta"];
+const wordsCExtreme = ["#define", "argc", "*argv[]", "fprintf", "int*", "&var", "->", "stdio.h", "stdlib.h", "void*", "\\n", "strcpy()", "free()", "realloc", "==", "!=", "<=", ">=", "&&", "||"];
 
 const uiTranslations = {
     "English": {
@@ -63,6 +66,33 @@ const uiTranslations = {
         "lgWrong": "Yanlış Harfler",
         "lgWrongWords": "Yanlış Kelimeler",
         "bestWpmLabel": "En İyi DKS " 
+    },
+    "C": {
+        "langLabel": "Language",
+        "title": "C Coding Speed Test",
+        "subtitle": "Type the C syntax below into the box:",
+        "placeholder": "Start coding to begin...",
+        "timeLeft": "TIME LEFT",
+        "wpm": "WPM",
+        "correctLetters": "Correct Chars",
+        "wrongLetters": "Wrong Chars",
+        "wrongWords": "Syntax Errors",
+        "restart": "↻ RECOMPILE",
+        "difficultyLabel": "Difficulty",
+        "diffNormal": "Normal",
+        "diffHard": "Hard",
+        "diffExtreme": "Extreme",
+        "fontLabel": "Font",
+        "soundLabel": "Sound",
+        "soundOff": "Off",
+        "sound1": "Sound 1",
+        "sound2": "Sound 2",
+        "sound3": "Sound 3",
+        "lastGameTitle": "Last Build",
+        "lgCorrect": "Correct Chars",
+        "lgWrong": "Wrong Chars",
+        "lgWrongWords": "Syntax Errors",
+        "bestWpmLabel": "Best WPM " 
     }
 };
 
@@ -149,6 +179,10 @@ function updateWordsList() {
         if (currentDifficulty === "Normal") wordsList = wordsTrNormal;
         else if (currentDifficulty === "Hard") wordsList = wordsTrHard;
         else if (currentDifficulty === "Extreme") wordsList = wordsTrExtreme;
+    } else if (currentLang === "C") {
+        if (currentDifficulty === "Normal") wordsList = wordsCNormal;
+        else if (currentDifficulty === "Hard") wordsList = wordsCHard;
+        else if (currentDifficulty === "Extreme") wordsList = wordsCExtreme;
     }
 }
 
