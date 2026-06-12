@@ -1,4 +1,4 @@
-// --- DİL SEÇENEKLERİ, ÇEVİRİLER VE KELİME HAVUZLARI ---
+//  DİL SEÇENEKLERİ, ÇEVİRİLER VE KELİME HAVUZLARI 
 
 const wordsEnNormal = [
     "apple", "computer", "code", "student", "keyboard", "mouse", "screen", "project", 
@@ -372,9 +372,11 @@ function changeFont(fontValue, fontName) {
     let userInput = document.getElementById("user-input");
     
     if (targetText) targetText.style.fontFamily = fontValue;
-    if (userInput) userInput.style.fontFamily = fontValue;
-
-    userInput.focus();
+    
+    if (userInput) {
+        userInput.style.fontFamily = fontValue;
+        userInput.focus();
+    }
 }
 
 // --- DİL DEĞİŞTİRME ---
