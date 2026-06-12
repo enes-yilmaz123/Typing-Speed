@@ -3,14 +3,21 @@
 const wordsEnNormal = ["apple", "computer", "code", "student", "keyboard", "mouse", "screen", "project", "window", "game", "speed", "test", "coffee", "network", "system", "book", "chair", "desk", "egg", "fish"];
 const wordsTrNormal = ["elma", "bilgisayar", "kod", "öğrenci", "klavye", "fare", "ekran", "proje", "pencere", "oyun", "hız", "test", "kahve", "ağ", "sistem", "kitap", "sandalye", "masa", "yumurta", "balık"];
 const wordsCNormal = ["int", "char", "void", "main", "for", "while", "if", "else", "return", "break", "struct", "float", "double", "switch", "case", "sizeof", "null", "long", "short", "const"];
+const wordsHtmlNormal = ["div", "span", "body", "head", "html", "main", "nav", "img", "form", "ul", "li", "button", "table", "header", "footer"];
+const wordsCssNormal = ["color", "margin", "padding", "width", "height", "border", "flex", "grid", "block", "left", "right", "top", "bottom", "font", "text"];
 
 const wordsEnHard = ["experience", "government", "understand", "difference", "management", "technology", "information", "university", "particular", "development", "population", "production", "performance", "environment", "traditional"];
 const wordsTrHard = ["araştırmacı", "sürdürülebilir", "gerçekleştirme", "değerlendirme", "koordinasyon", "kütüphane", "laboratuvar", "uluslararası", "mühendislik", "üniversite", "organizasyon", "sorumluluk", "memnuniyet", "bağımsızlık", "vazgeçilmez"];
 const wordsCHard = ["include", "typedef", "unsigned", "continue", "default", "extern", "register", "volatile", "static", "pointer", "malloc", "calloc", "printf", "scanf", "strlen"];
+const wordsCssHard = ["background-color", "font-family", "font-size", "text-align", "display", "position", "justify-content", "align-items", "border-radius", "z-index", "overflow", "cursor", "opacity", "box-sizing", "transition"];
+const wordsHtmlHard = ["class", "id", "href", "src", "alt", "style", "title", "input", "label", "tbody", "script", "link", "meta", "video", "canvas"];
 
 const wordsEnExtreme = ["Hello!", "It's", "Wait,", "U.S.A.", "Wi-Fi", "100%", "O'clock", "Code;", "A.I.", "Yes/No", "X-Ray", "Top-tier", "#1", "$100", "Why?", "C++", "T-Shirt", "Don't", "Stop.", "Well-done"];
 const wordsTrExtreme = ["Merhaba!", "Türkiye'de", "Bekle,", "A.B.D.", "Wi-Fi", "%100", "Saat'te", "Kod;", "Yapay-Zeka", "Evet/Hayır", "Röntgen", "Üst-düzey", "#1", "100₺", "Neden?", "C++", "T-Shirt", "Yapma!", "Dur.", "E-Posta"];
 const wordsCExtreme = ["#define", "argc", "*argv[]", "fprintf", "int*", "&var", "->", "stdio.h", "stdlib.h", "void*", "\\n", "strcpy()", "free()", "realloc", "==", "!=", "<=", ">=", "&&", "||"];
+const wordsCssExtreme = [".container", "#header", "@media", "max-width: 100%;", "box-shadow: 0 4px 8px;", "transform: translateY(-50%);", ":hover", "::before", "nth-child(even)", "rgba(255, 255, 255, 0.5)", "!important", "calc(100vh - 50px)", "flex-direction: column;", "@keyframes", "cubic-bezier()"];
+const wordsHtmlExtreme = ["<!DOCTYPE html>", "charset=\"UTF-8\"", "<link rel=\"stylesheet\">", "<meta name=\"viewport\">", "target=\"_blank\"", "type=\"text/javascript\"", "placeholder=\"\"", "onclick=\"\"", "data-id=\"123\"", "aria-hidden=\"true\""];
+
 
 const uiTranslations = {
     "English": {
@@ -89,6 +96,60 @@ const uiTranslations = {
         "sound2": "Sound 2",
         "sound3": "Sound 3",
         "lastGameTitle": "Last Build",
+        "lgCorrect": "Correct Chars",
+        "lgWrong": "Wrong Chars",
+        "lgWrongWords": "Syntax Errors",
+        "bestWpmLabel": "Best WPM " 
+    },
+    "HTML": {
+        "langLabel": "Language",
+        "title": "HTML Speed Test",
+        "subtitle": "Type the HTML tags below into the box:",
+        "placeholder": "Start coding to begin...",
+        "timeLeft": "TIME LEFT",
+        "wpm": "WPM",
+        "correctLetters": "Correct Chars",
+        "wrongLetters": "Wrong Chars",
+        "wrongWords": "Syntax Errors",
+        "restart": "↻ REWRITE",
+        "difficultyLabel": "Difficulty",
+        "diffNormal": "Normal",
+        "diffHard": "Hard",
+        "diffExtreme": "Extreme",
+        "fontLabel": "Font",
+        "soundLabel": "Sound",
+        "soundOff": "Off",
+        "sound1": "Sound 1",
+        "sound2": "Sound 2",
+        "sound3": "Sound 3",
+        "lastGameTitle": "Last Build",
+        "lgCorrect": "Correct Chars",
+        "lgWrong": "Wrong Chars",
+        "lgWrongWords": "Syntax Errors",
+        "bestWpmLabel": "Best WPM " 
+    },
+    "CSS": {
+        "langLabel": "Language",
+        "title": "CSS Speed Test",
+        "subtitle": "Type the CSS rules below into the box:",
+        "placeholder": "Start styling to begin...",
+        "timeLeft": "TIME LEFT",
+        "wpm": "WPM",
+        "correctLetters": "Correct Chars",
+        "wrongLetters": "Wrong Chars",
+        "wrongWords": "Syntax Errors",
+        "restart": "↻ RESTYLE",
+        "difficultyLabel": "Difficulty",
+        "diffNormal": "Normal",
+        "diffHard": "Hard",
+        "diffExtreme": "Extreme",
+        "fontLabel": "Font",
+        "soundLabel": "Sound",
+        "soundOff": "Off",
+        "sound1": "Sound 1",
+        "sound2": "Sound 2",
+        "sound3": "Sound 3",
+        "lastGameTitle": "Last Style",
         "lgCorrect": "Correct Chars",
         "lgWrong": "Wrong Chars",
         "lgWrongWords": "Syntax Errors",
@@ -183,6 +244,14 @@ function updateWordsList() {
         if (currentDifficulty === "Normal") wordsList = wordsCNormal;
         else if (currentDifficulty === "Hard") wordsList = wordsCHard;
         else if (currentDifficulty === "Extreme") wordsList = wordsCExtreme;
+    } else if (currentLang === "HTML") {
+        if (currentDifficulty === "Normal") wordsList = wordsHtmlNormal;
+        else if (currentDifficulty === "Hard") wordsList = wordsHtmlHard;
+        else if (currentDifficulty === "Extreme") wordsList = wordsHtmlExtreme;
+    } else if (currentLang === "CSS") {
+        if (currentDifficulty === "Normal") wordsList = wordsCssNormal;
+        else if (currentDifficulty === "Hard") wordsList = wordsCssHard;
+        else if (currentDifficulty === "Extreme") wordsList = wordsCssExtreme;
     }
 }
 
