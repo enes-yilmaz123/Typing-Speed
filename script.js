@@ -85,6 +85,7 @@ let totalWrongLetters = 0;
 let lastWrongAttempt = "";
 
 window.onload = function() {
+    // --- 1. İlk bölümden gelen ayar ve ses yüklemeleri ---
     let savedLang = localStorage.getItem("preferredLang") || "English";
     let savedDiff = localStorage.getItem("preferredDiff") || "Normal";
     let savedFont = localStorage.getItem("preferredFont") || "Courier New, monospace";
@@ -96,8 +97,13 @@ window.onload = function() {
     changeFont(savedFont, savedFontName);
     changeSound(savedSound);
     
-    loadSoundsToRAM();
+    loadSoundsToRAM(); // <--- İŞTE BU ARTIK ÇALIŞACAK
     updateLastGameUI(); 
+    
+    // --- 2. İkinci bölümden gelen oyun başlatma fonksiyonları ---
+    generateRandomWords();
+    prepareTest();
+    initProfileLogic();
     updateBestWpmUI(); 
 };
 
@@ -173,11 +179,12 @@ async function loadSoundsToRAM() {
     }
 }
 
-function playKeystrokeSound() {
+async function playKeystrokeSound() {
     if (currentSound === "Off") return;
 
+    // Tarayıcı ses bağlamını duraklatmışsa, işlemi bekleterek güvenli şekilde tekrar başlat
     if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
+        await audioCtx.resume();
     }
 
     const buffer = decodedSounds[currentSound];
@@ -192,6 +199,9 @@ function playKeystrokeSound() {
         source.connect(gainNode);
         gainNode.connect(audioCtx.destination);
         source.start(0); 
+    } else {
+        // Eğer dosya fetch ile okunamadıysa konsola uyarı basar
+        console.warn("Ses dosyası çalınamadı çünkü RAM'e yüklenememiş. Projeyi bir Local Server ile çalıştırdığından emin ol.");
     }
 }
 
@@ -374,13 +384,6 @@ function generateRandomWords() {
     }
     updateTargetWordStyles();
 }
-
-window.onload = function() {
-    generateRandomWords();
-    prepareTest();
-    initProfileLogic();
-    updateBestWpmUI();
-};
 
 function initProfileLogic() {
     const headerActionBtn = document.getElementById("login-button"); 
