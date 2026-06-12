@@ -1,7 +1,33 @@
 // --- DİL SEÇENEKLERİ, ÇEVİRİLER VE KELİME HAVUZLARI ---
 
-const wordsEnNormal = ["apple", "computer", "code", "student", "keyboard", "mouse", "screen", "project", "window", "game", "speed", "test", "coffee", "network", "system", "book", "chair", "desk", "egg", "fish"];
-const wordsTrNormal = ["elma", "bilgisayar", "kod", "öğrenci", "klavye", "fare", "ekran", "proje", "pencere", "oyun", "hız", "test", "kahve", "ağ", "sistem", "kitap", "sandalye", "masa", "yumurta", "balık"];
+const wordsEnNormal = [
+    "apple", "computer", "code", "student", "keyboard", "mouse", "screen", "project", 
+    "window", "game", "speed", "test", "coffee", "network", "system", "book", "chair", 
+    "desk", "egg", "fish", "music", "phone", "water", "house", "world", "space", 
+    "power", "money", "story", "night", "color", "family", "friend", "heart", "mind", 
+    "clock", "paper", "pencil", "plant", "river", "ocean", "sound", "light", "train", 
+    "plane", "earth", "morning", "month", "door", "road", "animal", "nature", "forest", 
+    "mountain", "beach", "summer", "winter", "spring", "autumn", "weather", "rain", 
+    "snow", "wind", "fire", "ice", "star", "moon", "sun", "cloud", "sky", "bird", 
+    "cat", "dog", "horse", "car", "bus", "city", "town", "street", "building", "glass", 
+    "metal", "wood", "plastic", "stone", "sand", "soil", "tree", "leaf", "flower", 
+    "fruit", "food", "bread", "milk", "cheese", "meat", "sugar", "salt", "oil", "time", 
+    "year", "week", "day", "hour", "minute", "second", "person", "child", "man", "woman"
+];
+const wordsTrNormal = [
+    "elma", "bilgisayar", "kod", "öğrenci", "klavye", "fare", "ekran", "proje", 
+    "pencere", "oyun", "hız", "test", "kahve", "ağ", "sistem", "kitap", "sandalye", 
+    "masa", "yumurta", "balık", "müzik", "telefon", "su", "ev", "dünya", "uzay", 
+    "güç", "para", "hikaye", "gece", "renk", "aile", "arkadaş", "kalp", "akıl", 
+    "saat", "kağıt", "kalem", "bitki", "nehir", "okyanus", "ses", "ışık", "tren", 
+    "uçak", "sabah", "ay", "kapı", "yol", "araba", "tarih", "roman", "şiir", "hayvan", 
+    "doğa", "orman", "dağ", "plaj", "yaz", "kış", "ilkbahar", "sonbahar", "hava", 
+    "yağmur", "kar", "rüzgar", "ateş", "buz", "yıldız", "güneş", "bulut", "gökyüzü", 
+    "kuş", "kedi", "köpek", "at", "otobüs", "şehir", "kasaba", "sokak", "bina", "cam", 
+    "metal", "tahta", "plastik", "taş", "kum", "toprak", "ağaç", "yaprak", "çiçek", 
+    "meyve", "yemek", "ekmek", "süt", "peynir", "et", "şeker", "tuz", "yağ", "zaman", 
+    "yıl", "hafta", "gün", "dakika", "saniye", "insan", "çocuk", "adam", "kadın", "göz"
+];
 const wordsCNormal = ["int", "char", "void", "main", "for", "while", "if", "else", "return", "break", "struct", "float", "double", "switch", "case", "sizeof", "null", "long", "short", "const"];
 const wordsHtmlNormal = ["div", "span", "body", "head", "html", "main", "nav", "img", "form", "ul", "li", "button", "table", "header", "footer"];
 const wordsCssNormal = ["color", "margin", "padding", "width", "height", "border", "flex", "grid", "block", "left", "right", "top", "bottom", "font", "text"];
